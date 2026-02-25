@@ -82,6 +82,11 @@ input:disabled { opacity: 0.5; cursor: not-allowed; }
 .chart-label { width: 70px; flex-shrink: 0; font-size: 0.85rem; color: var(--text-sub); font-weight: 600; text-align: left; }
 .chart-bar-bg { flex: 1; height: 12px; background: #f1f3f5; border-radius: 6px; overflow: hidden; cursor: help; }
 .chart-bar-fill { height: 100%; border-radius: 6px; transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.chart-bar-fill.installment { background: var(--c-installment); }
+.chart-bar-fill.insurance { background: var(--c-insurance); }
+.chart-bar-fill.tax { background: var(--c-tax); }
+.chart-bar-fill.fuel { background: var(--c-fuel); }
+.chart-bar-fill.maintenance { background: var(--c-maint); }
 .chart-value { width: 85px; flex-shrink: 0; text-align: right; font-size: 0.85rem; font-weight: 700; }
 
 .chart-tooltip {
