@@ -1,1 +1,2 @@
-A simple HTML/JS/CSS starter template
+# camulator
+Car recommendation & maintenance cost simulator
