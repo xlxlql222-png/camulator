@@ -3,28 +3,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Data: Car List ---
     const carData = [
-        { id: 'walk', name: '튼튼한 두 다리', price: 0, cc: 0, taxYear: 0, insurance: 0, efficiency: 0, maintenance: 0, icon: '🚶' },
-        { id: 'public', name: '대중교통 / 자전거', price: 0, cc: 0, taxYear: 0, insurance: 0, efficiency: 0, maintenance: 12, icon: '🚌' },
-        { id: 'casper', name: '캐스퍼/모닝 (경차)', price: 1600, cc: 998, taxYear: 10, insurance: 70, efficiency: 14, maintenance: 5, icon: '🐣' },
-        { id: 'avante', name: '아반떼 (준중형)', price: 2400, cc: 1598, taxYear: 29, insurance: 90, efficiency: 15, maintenance: 7, icon: '🚙' },
-        { id: 'k5', name: 'K5 / 쏘나타 (중형)', price: 3200, cc: 1999, taxYear: 52, insurance: 110, efficiency: 12, maintenance: 10, icon: '🚘' },
-        { id: 'sorento', name: '쏘렌토 (중형 SUV)', price: 4200, cc: 2151, taxYear: 56, insurance: 120, efficiency: 11, maintenance: 12, icon: '🏔️' },
-        { id: 'grandeur', name: '그랜저 (준대형)', price: 4500, cc: 2497, taxYear: 65, insurance: 130, efficiency: 10, maintenance: 13, icon: '💎' },
-        { id: 'palisade', name: '팰리세이드 (대형 SUV)', price: 5500, cc: 3778, taxYear: 98, insurance: 150, efficiency: 8, maintenance: 15, icon: '🏰' },
-        { id: 'g80', name: '제네시스 G80', price: 6500, cc: 2497, taxYear: 65, insurance: 170, efficiency: 9, maintenance: 20, icon: '✨' },
-        { id: 'gv80', name: '제네시스 GV80', price: 8500, cc: 2497, taxYear: 65, insurance: 200, efficiency: 8, maintenance: 25, icon: '🏔️✨' },
-        { id: 'model3', name: '테슬라 모델 3', price: 6000, cc: 0, taxYear: 13, insurance: 180, efficiency: 18, maintenance: 5, icon: '🔋' },
-        { id: 'eclass', name: '벤츠 E-Class', price: 8000, cc: 1999, taxYear: 52, insurance: 250, efficiency: 10, maintenance: 50, icon: '🌟' },
-        { id: 'cayenne', name: '포르쉐 카이엔', price: 14000, cc: 2995, taxYear: 78, insurance: 350, efficiency: 7, maintenance: 80, icon: '🚀' },
-        { id: 'ferrari', name: '페라리 F8', price: 40000, cc: 3902, taxYear: 101, insurance: 1000, efficiency: 5, maintenance: 300, icon: '🏎️' }
+        { id: 'walk', name: '튼튼한 두 다리', price: 0, cc: 0, taxYear: 0, insurance: 0, efficiency: 0, maintenance: 0, icon: '🚶', img: '' },
+        { id: 'public', name: '대중교통 / 자전거', price: 0, cc: 0, taxYear: 0, insurance: 0, efficiency: 0, maintenance: 12, icon: '🚌', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Bus_icon.svg/640px-Bus_icon.svg.png' },
+        { id: 'casper', name: '캐스퍼/모닝 (경차)', price: 1600, cc: 998, taxYear: 10, insurance: 70, efficiency: 14, maintenance: 5, icon: '🐣', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Hyundai_Casper_AX1_White_1.jpg/640px-Hyundai_Casper_AX1_White_1.jpg' },
+        { id: 'avante', name: '아반떼 (준중형)', price: 2400, cc: 1598, taxYear: 29, insurance: 90, efficiency: 15, maintenance: 7, icon: '🚙', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Hyundai_Avante_CN7_white_%281%29.jpg/640px-Hyundai_Avante_CN7_white_%281%29.jpg' },
+        { id: 'k5', name: 'K5 / 쏘나타 (중형)', price: 3200, cc: 1999, taxYear: 52, insurance: 110, efficiency: 12, maintenance: 10, icon: '🚘', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Kia_K5_Hybrid_DL3_White_%281%29_%28cropped%29.jpg/640px-Kia_K5_Hybrid_DL3_White_%281%29_%28cropped%29.jpg' },
+        { id: 'sorento', name: '쏘렌토 (중형 SUV)', price: 4200, cc: 2151, taxYear: 56, insurance: 120, efficiency: 11, maintenance: 12, icon: '🏔️', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Kia_Sorento_MQ4_White_1.jpg/640px-Kia_Sorento_MQ4_White_1.jpg' },
+        { id: 'grandeur', name: '그랜저 (준대형)', price: 4500, cc: 2497, taxYear: 65, insurance: 130, efficiency: 10, maintenance: 13, icon: '💎', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Hyundai_Grandeur_GN7_Black_1.jpg/640px-Hyundai_Grandeur_GN7_Black_1.jpg' },
+        { id: 'palisade', name: '팰리세이드 (대형 SUV)', price: 5500, cc: 3778, taxYear: 98, insurance: 150, efficiency: 8, maintenance: 15, icon: '🏰', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Hyundai_Palisade_LX2_White_1.jpg/640px-Hyundai_Palisade_LX2_White_1.jpg' },
+        { id: 'g80', name: '제네시스 G80', price: 6500, cc: 2497, taxYear: 65, insurance: 170, efficiency: 9, maintenance: 20, icon: '✨', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Genesis_G80_RG3_white_%282%29.jpg/640px-Genesis_G80_RG3_white_%282%29.jpg' },
+        { id: 'gv80', name: '제네시스 GV80', price: 8500, cc: 2497, taxYear: 65, insurance: 200, efficiency: 8, maintenance: 25, icon: '🏔️✨', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Genesis_GV80_JX1_White_1.jpg/640px-Genesis_GV80_JX1_White_1.jpg' },
+        { id: 'model3', name: '테슬라 모델 3', price: 6000, cc: 0, taxYear: 13, insurance: 180, efficiency: 18, maintenance: 5, icon: '🔋', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Tesla_Model_3_white_%282%29.jpg/640px-Tesla_Model_3_white_%282%29.jpg' },
+        { id: 'eclass', name: '벤츠 E-Class', price: 8000, cc: 1999, taxYear: 52, insurance: 250, efficiency: 10, maintenance: 50, icon: '🌟', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Mercedes-Benz_E_220_d_Avantgarde_%28W_213%29_%E2%80%93_Frontansicht%2C_15._Mai_2016%2C_D%C3%BCsseldorf.jpg/640px-Mercedes-Benz_E_220_d_Avantgarde_%28W_213%29_%E2%80%93_Frontansicht%2C_15._Mai_2016%2C_D%C3%BCsseldorf.jpg' },
+        { id: 'cayenne', name: '포르쉐 카이엔', price: 14000, cc: 2995, taxYear: 78, insurance: 350, efficiency: 7, maintenance: 80, icon: '🚀', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Porsche_Cayenne_S_%2892A%29_facelift_%E2%80%93_Frontansicht%2C_11._Oktober_2015%2C_D%C3%BCsseldorf.jpg/640px-Porsche_Cayenne_S_%2892A%29_facelift_%E2%80%93_Frontansicht%2C_11._Oktober_2015%2C_D%C3%BCsseldorf.jpg' },
+        { id: 'ferrari', name: '페라리 F8', price: 40000, cc: 3902, taxYear: 101, insurance: 1000, efficiency: 5, maintenance: 300, icon: '🏎️', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Ferrari_F8_Tributo_Geneva_International_Motor_Show_2019_Le_Grand-Saconnex_%28GIMS0029%29.jpg/640px-Ferrari_F8_Tributo_Geneva_International_Motor_Show_2019_Le_Grand-Saconnex_%28GIMS0029%29.jpg' }
     ];
 
     const CONSTANTS = {
-        FUEL_PRICE: 1650, // Updated fuel price
-        INTEREST_RATE: 0.055, // Updated interest rate
+        FUEL_PRICE: 1650, 
+        INTEREST_RATE: 0.055, 
         INSTALLMENT_MONTHS: 60,
-        MAINT_BASE_RATE: 35, // Per KM rate for maintenance/tires/etc.
-        PUBLIC_TRANS_COST: 125000 // Average monthly public transport
+        MAINT_BASE_RATE: 35, 
+        PUBLIC_TRANS_COST: 125000 
     };
 
     // --- DOM Elements ---
@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const daysWeekInput = document.getElementById('days-per-week');
 
     const monitorIcon = document.getElementById('monitor-icon');
+    const monitorImg = document.getElementById('monitor-img'); // New Image Element
     const monitorName = document.getElementById('monitor-car-name');
     const monitorMsg = document.getElementById('monitor-message');
     
@@ -64,13 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const daysWeek = Number(daysWeekInput.value) || 0;
 
         // 2. Mileage Calculation
-        // (Daily Round Trip) * Days * 4.345 (avg weeks/month)
         const monthlyMileage = Math.round(dailyDist * 2 * daysWeek * 4.345);
         calcMileageEl.textContent = monthlyMileage.toLocaleString();
 
-        // 3. Recommendation Logic (Realistic Financial Health)
-        // Formula: Car Price <= (Annual Salary * 0.5) + Cash
-        // We use 0.5 as a "Safe" multiplier. 0.8 is "Risk", 1.0+ is "Car-Poor"
+        // 3. Recommendation Logic
         const safeBudget = (salary * 0.5) + cash;
         
         let bestCar = carData[0]; // Default: Walk
@@ -80,12 +78,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (salary < 2800 && cash < 800) {
             bestCar = carData[1]; // Public Transport
         } else {
-            // Filter cars that fit the budget
             const affordableCars = carData.filter(car => car.price <= safeBudget);
             if (affordableCars.length > 0) {
                 bestCar = affordableCars[affordableCars.length - 1];
             } else {
-                bestCar = carData[1]; // Fallback to Public if no car fits
+                bestCar = carData[1];
             }
         }
 
@@ -93,9 +90,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateUI(car, salary, cash, mileage) {
-        monitorIcon.textContent = car.icon;
         monitorName.textContent = car.name;
         
+        // Image vs Icon Logic
+        if (car.img) {
+            monitorImg.src = car.img;
+            monitorImg.classList.remove('hidden');
+            monitorIcon.classList.add('hidden');
+            
+            // Error handling: if image fails, show icon
+            monitorImg.onerror = () => {
+                monitorImg.classList.add('hidden');
+                monitorIcon.classList.remove('hidden');
+                monitorIcon.textContent = car.icon;
+            };
+        } else {
+            monitorImg.classList.add('hidden');
+            monitorIcon.classList.remove('hidden');
+            monitorIcon.textContent = car.icon;
+        }
+
         // Message context
         if (car.id === 'walk') {
              monitorMsg.innerHTML = `현재 재정 상태에서는 <strong>튼튼한 두 다리</strong>가 가장 안전합니다.`;
@@ -129,8 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // D. Fuel (Distance / Efficiency * Price)
             if (car.efficiency > 0) {
-                // For Electric Cars (Model 3), fuel is electricity. Efficiency is KM/kWh.
-                // Simplified: 1kWh = 200 KRW
                 const energyPrice = car.id === 'model3' ? 300 : CONSTANTS.FUEL_PRICE;
                 costs.fuel = (mileage / car.efficiency) * energyPrice;
             }
@@ -159,8 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Listeners ---
     [salaryInput, cashInput, dailyDistInput, daysWeekInput].forEach(el => {
         el.addEventListener('input', calculate);
-        el.addEventListener('keyup', calculate); // Extra safety
-        el.addEventListener('change', calculate); // For select
+        el.addEventListener('keyup', calculate); 
+        el.addEventListener('change', calculate); 
     });
     
     // Share
