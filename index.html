@@ -1,14 +1,139 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>내 연봉에 맞는 차는? | 카뮬레이터</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <meta property="og:title" content="카뮬레이터 - 현실적인 차량 유지비 계산기">
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+
+    <div class="app-wrapper">
+        <header class="site-header">
+            <h1 class="logo">🚗 카뮬레이터</h1>
+            <p class="subtitle">당신의 지갑을 지켜주는 현실적인 계산기</p>
+        </header>
+
+        <main>
+            <!-- Real-time Monitor -->
+            <section class="monitor-section">
+                <div class="monitor-screen">
+                    <div class="monitor-icon" id="monitor-icon">🚶</div>
+                    <h2 id="monitor-car-name">튼튼한 두 다리</h2>
+                    <p id="monitor-message" class="monitor-desc">
+                        아직은 걷거나 대중교통이 최고입니다!<br>자산을 좀 더 모아볼까요?
+                    </p>
+                </div>
+            </section>
+
+            <!-- Inputs -->
+            <section class="card input-section">
+                <h3>💰 재정 상태 입력</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="salary">연봉 (만원)</label>
+                        <input type="number" id="salary" placeholder="예: 3500" inputmode="numeric">
+                    </div>
+                    <div class="input-group">
+                        <label for="cash">모은 돈 (만원)</label>
+                        <input type="number" id="cash" placeholder="예: 500" inputmode="numeric">
+                    </div>
+                </div>
+
+                <h3>🚦 주행 환경 (왕복 자동계산)</h3>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="daily-distance">편도 거리 (km)</label>
+                        <input type="number" id="daily-distance" placeholder="예: 15" inputmode="numeric">
+                    </div>
+                    <div class="input-group">
+                        <label for="days-per-week">주 출근 일수</label>
+                        <select id="days-per-week">
+                            <option value="5" selected>주 5일</option>
+                            <option value="6">주 6일</option>
+                            <option value="7">매일</option>
+                            <option value="2">주말만</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-info">
+                    📅 월 예상 주행거리: <span id="calculated-mileage">0</span> km
+                </div>
+            </section>
+
+            <!-- Result -->
+            <section class="card result-section">
+                <h3>📉 월 예상 지출 (유지비)</h3>
+                
+                <div class="total-cost-display">
+                    <span id="total-monthly-cost">0</span>
+                    <span class="unit">원 / 월</span>
+                </div>
+
+                <div class="chart-container">
+                    <!-- Installment -->
+                    <div class="chart-row">
+                        <div class="chart-label">할부금</div>
+                        <div class="chart-bar-bg">
+                            <div class="chart-bar-fill installment" id="bar-installment"></div>
+                        </div>
+                        <div class="chart-value" id="val-installment">0원</div>
+                    </div>
+                    <!-- Insurance -->
+                    <div class="chart-row">
+                        <div class="chart-label">보험료</div>
+                        <div class="chart-bar-bg">
+                            <div class="chart-bar-fill insurance" id="bar-insurance"></div>
+                        </div>
+                        <div class="chart-value" id="val-insurance">0원</div>
+                    </div>
+                    <!-- Tax -->
+                    <div class="chart-row">
+                        <div class="chart-label">세금</div>
+                        <div class="chart-bar-bg">
+                            <div class="chart-bar-fill tax" id="bar-tax"></div>
+                        </div>
+                        <div class="chart-value" id="val-tax">0원</div>
+                    </div>
+                    <!-- Fuel -->
+                    <div class="chart-row">
+                        <div class="chart-label">유류비</div>
+                        <div class="chart-bar-bg">
+                            <div class="chart-bar-fill fuel" id="bar-fuel"></div>
+                        </div>
+                        <div class="chart-value" id="val-fuel">0원</div>
+                    </div>
+                    <!-- Maintenance -->
+                    <div class="chart-row">
+                        <div class="chart-label">정비/기타</div>
+                        <div class="chart-bar-bg">
+                            <div class="chart-bar-fill maintenance" id="bar-maintenance"></div>
+                        </div>
+                        <div class="chart-value" id="val-maintenance">0원</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Buttons -->
+            <button id="share-btn" class="btn-share">
+                <span>🔗 친구에게 결과 공유하기</span>
+            </button>
+
+            <!-- Ads -->
+            <div class="ad-banner">
+                <p>Google AdSense 영역</p>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <p>&copy; 2026 카뮬레이터. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
 </body>
 </html>
