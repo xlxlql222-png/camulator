@@ -20,51 +20,104 @@
 
         <main>
             <!-- Real-time Monitor -->
-            <section class="monitor-section">
+            <section class="monitor-section" id="monitor-bg">
                 <div class="monitor-screen">
+                    <div class="monitor-badge" id="safety-badge">평가 대기중</div>
                     <div class="monitor-content">
                         <div class="monitor-icon" id="monitor-icon">🚶</div>
                         <img id="monitor-img" class="monitor-img hidden" src="" alt="Car Image">
                     </div>
                     <h2 id="monitor-car-name">튼튼한 두 다리</h2>
+                    <div class="car-price-tag" id="car-price-display">차량가: 0원</div>
                     <p id="monitor-message" class="monitor-desc">
                         아직은 걷거나 대중교통이 최고입니다!<br>자산을 좀 더 모아볼까요?
                     </p>
                 </div>
             </section>
 
+            <!-- Push Container Slot (New location) -->
+            <div id="push-slot"></div>
+
             <!-- Inputs -->
             <section class="card input-section">
-                <h3>💰 재정 상태 입력</h3>
+                <h3>👤 기본 프로필 (보험료 산출용)</h3>
                 <div class="input-row">
                     <div class="input-group">
+                        <label for="age">만 나이</label>
+                        <input type="number" id="age" placeholder="예: 28" value="30" inputmode="numeric">
+                    </div>
+                    <div class="input-group">
+                        <label for="experience">운전 경력</label>
+                        <select id="experience">
+                            <option value="0">신규 (1년 미만)</option>
+                            <option value="1">1~3년</option>
+                            <option value="3" selected>3~5년</option>
+                            <option value="5">5~10년</option>
+                            <option value="10">10년 이상 (베테랑)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <h3>💰 재정 상태 및 할부</h3>
+                <div class="input-row">
+                    <div class="input-group" id="salary-group">
                         <label for="salary">연봉 (만원)</label>
                         <input type="number" id="salary" placeholder="예: 3500" inputmode="numeric">
                     </div>
-                    <div class="input-group">
+                    <div class="input-group" id="cash-group">
                         <label for="cash">모은 돈 (만원)</label>
                         <input type="number" id="cash" placeholder="예: 500" inputmode="numeric">
                     </div>
                 </div>
+                <div class="input-group">
+                    <label for="installment-months">할부 기간 (개월)</label>
+                    <select id="installment-months">
+                        <option value="0">일시불 (0개월)</option>
+                        <option value="12">12개월</option>
+                        <option value="24">24개월</option>
+                        <option value="36">36개월</option>
+                        <option value="48">48개월</option>
+                        <option value="60" selected>60개월 (기본)</option>
+                        <option value="72">72개월</option>
+                        <option value="84">84개월</option>
+                        <option value="120">120개월 (인생 포기)</option>
+                    </select>
+                </div>
 
-                <h3>🚦 주행 환경 (왕복 자동계산)</h3>
-                <div class="input-row">
-                    <div class="input-group">
-                        <label for="daily-distance">편도 거리 (km)</label>
-                        <input type="number" id="daily-distance" placeholder="예: 15" inputmode="numeric">
-                    </div>
-                    <div class="input-group">
-                        <label for="days-per-week">주 출근 일수</label>
-                        <select id="days-per-week">
-                            <option value="5" selected>주 5일</option>
-                            <option value="6">주 6일</option>
-                            <option value="7">매일</option>
-                            <option value="2">주말만</option>
-                        </select>
+                <div class="mileage-header">
+                    <h3>🚦 주행거리 설정</h3>
+                    <div class="toggle-container">
+                        <button id="mode-calc" class="toggle-btn active">계산기</button>
+                        <button id="mode-direct" class="toggle-btn">직접입력</button>
                     </div>
                 </div>
+
+                <div id="calc-mileage-group">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="daily-distance">편도 거리 (km)</label>
+                            <input type="number" id="daily-distance" placeholder="예: 15" inputmode="numeric">
+                        </div>
+                        <div class="input-group">
+                            <label for="days-per-week">주 출근 일수</label>
+                            <select id="days-per-week">
+                                <option value="5" selected>주 5일</option>
+                                <option value="6">주 6일</option>
+                                <option value="7">매일</option>
+                                <option value="2">주말만</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div id="direct-mileage-group" class="hidden">
+                    <div class="input-group">
+                        <label for="manual-mileage">월 평균 주행거리 (km)</label>
+                        <input type="number" id="manual-mileage" placeholder="예: 1500" inputmode="numeric">
+                    </div>
+                </div>
+                
                 <div class="input-info">
-                    📅 월 예상 주행거리: <span id="calculated-mileage">0</span> km
+                    📅 최종 월 주행거리: <span id="calculated-mileage">0</span> km
                 </div>
             </section>
 
@@ -78,7 +131,6 @@
                 </div>
 
                 <div class="chart-container">
-                    <!-- Installment -->
                     <div class="chart-row">
                         <div class="chart-label">할부금</div>
                         <div class="chart-bar-bg">
@@ -86,7 +138,6 @@
                         </div>
                         <div class="chart-value" id="val-installment">0원</div>
                     </div>
-                    <!-- Insurance -->
                     <div class="chart-row">
                         <div class="chart-label">보험료</div>
                         <div class="chart-bar-bg">
@@ -94,7 +145,6 @@
                         </div>
                         <div class="chart-value" id="val-insurance">0원</div>
                     </div>
-                    <!-- Tax -->
                     <div class="chart-row">
                         <div class="chart-label">세금</div>
                         <div class="chart-bar-bg">
@@ -102,7 +152,6 @@
                         </div>
                         <div class="chart-value" id="val-tax">0원</div>
                     </div>
-                    <!-- Fuel -->
                     <div class="chart-row">
                         <div class="chart-label">유류비</div>
                         <div class="chart-bar-bg">
@@ -110,7 +159,6 @@
                         </div>
                         <div class="chart-value" id="val-fuel">0원</div>
                     </div>
-                    <!-- Maintenance -->
                     <div class="chart-row">
                         <div class="chart-label">정비/기타</div>
                         <div class="chart-bar-bg">
@@ -121,15 +169,22 @@
                 </div>
             </section>
 
-            <!-- Buttons -->
-            <button id="share-btn" class="btn-share">
-                <span>🔗 친구에게 결과 공유하기</span>
-            </button>
-
-            <!-- Ads -->
-            <div class="ad-banner">
-                <p>Google AdSense 영역</p>
+            <!-- Reveal Push Section -->
+            <div id="reveal-area" class="reveal-area">
+                <button id="btn-reveal-push" class="btn-reveal">🤔 조금 무리해볼까요?</button>
             </div>
+
+            <!-- SEO Knowledge Base Section -->
+            <section class="seo-content-section">
+                <div class="seo-card">
+                    <h4>💡 자동차 유지비 절약 꿀팁</h4>
+                    <ul>
+                        <li><strong>자동차세 연납 할인:</strong> 매년 1월에 한꺼번에 납부하면 최대 5~7%를 아낄 수 있습니다.</li>
+                        <li><strong>보험료 다이렉트 가입:</strong> 설계사를 거치지 않는 다이렉트 보험은 약 15% 저렴합니다.</li>
+                    </ul>
+                </div>
+            </section>
+
         </main>
 
         <footer class="site-footer">
