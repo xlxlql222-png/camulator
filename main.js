@@ -4,20 +4,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Data: Car List ---
     const carData = [
         { id: 'walk', name: '튼튼한 두 다리', price: 0, cc: 0, taxYear: 0, insurance: 0, efficiency: 0, maintenance: 0, icon: '🚶' },
-        { id: 'public', name: '대중교통 / 자전거', price: 0, cc: 0, taxYear: 0, insurance: 0, efficiency: 0, maintenance: 10, icon: '🚌' },
-        { id: 'morning', name: '모닝/레이 (경차)', price: 1600, cc: 998, taxYear: 10, insurance: 70, efficiency: 14, maintenance: 5, icon: '🐣' },
-        { id: 'avante', name: '아반떼 (준중형)', price: 2600, cc: 1598, taxYear: 29, insurance: 90, efficiency: 13, maintenance: 7, icon: '🚙' },
-        { id: 'sonata', name: '쏘나타 (중형)', price: 3300, cc: 1999, taxYear: 52, insurance: 110, efficiency: 11, maintenance: 10, icon: '🚘' },
+        { id: 'public', name: '대중교통 / 자전거', price: 0, cc: 0, taxYear: 0, insurance: 0, efficiency: 0, maintenance: 12, icon: '🚌' },
+        { id: 'casper', name: '캐스퍼/모닝 (경차)', price: 1600, cc: 998, taxYear: 10, insurance: 70, efficiency: 14, maintenance: 5, icon: '🐣' },
+        { id: 'avante', name: '아반떼 (준중형)', price: 2400, cc: 1598, taxYear: 29, insurance: 90, efficiency: 15, maintenance: 7, icon: '🚙' },
+        { id: 'k5', name: 'K5 / 쏘나타 (중형)', price: 3200, cc: 1999, taxYear: 52, insurance: 110, efficiency: 12, maintenance: 10, icon: '🚘' },
+        { id: 'sorento', name: '쏘렌토 (중형 SUV)', price: 4200, cc: 2151, taxYear: 56, insurance: 120, efficiency: 11, maintenance: 12, icon: '🏔️' },
         { id: 'grandeur', name: '그랜저 (준대형)', price: 4500, cc: 2497, taxYear: 65, insurance: 130, efficiency: 10, maintenance: 13, icon: '💎' },
-        { id: 'genesis', name: '제네시스 G80', price: 7500, cc: 2497, taxYear: 65, insurance: 180, efficiency: 8, maintenance: 20, icon: '✨' },
-        { id: 'benz', name: '벤츠 E-Class', price: 9000, cc: 1999, taxYear: 52, insurance: 250, efficiency: 10, maintenance: 50, icon: '🌟' },
-        { id: 'porsche', name: '포르쉐 카이엔', price: 15000, cc: 2995, taxYear: 78, insurance: 350, efficiency: 6, maintenance: 100, icon: '🚀' }
+        { id: 'palisade', name: '팰리세이드 (대형 SUV)', price: 5500, cc: 3778, taxYear: 98, insurance: 150, efficiency: 8, maintenance: 15, icon: '🏰' },
+        { id: 'g80', name: '제네시스 G80', price: 6500, cc: 2497, taxYear: 65, insurance: 170, efficiency: 9, maintenance: 20, icon: '✨' },
+        { id: 'gv80', name: '제네시스 GV80', price: 8500, cc: 2497, taxYear: 65, insurance: 200, efficiency: 8, maintenance: 25, icon: '🏔️✨' },
+        { id: 'model3', name: '테슬라 모델 3', price: 6000, cc: 0, taxYear: 13, insurance: 180, efficiency: 18, maintenance: 5, icon: '🔋' },
+        { id: 'eclass', name: '벤츠 E-Class', price: 8000, cc: 1999, taxYear: 52, insurance: 250, efficiency: 10, maintenance: 50, icon: '🌟' },
+        { id: 'cayenne', name: '포르쉐 카이엔', price: 14000, cc: 2995, taxYear: 78, insurance: 350, efficiency: 7, maintenance: 80, icon: '🚀' },
+        { id: 'ferrari', name: '페라리 F8', price: 40000, cc: 3902, taxYear: 101, insurance: 1000, efficiency: 5, maintenance: 300, icon: '🏎️' }
     ];
 
     const CONSTANTS = {
-        FUEL_PRICE: 1700, 
-        INTEREST_RATE: 0.06, 
-        INSTALLMENT_MONTHS: 60
+        FUEL_PRICE: 1650, // Updated fuel price
+        INTEREST_RATE: 0.055, // Updated interest rate
+        INSTALLMENT_MONTHS: 60,
+        MAINT_BASE_RATE: 35, // Per KM rate for maintenance/tires/etc.
+        PUBLIC_TRANS_COST: 125000 // Average monthly public transport
     };
 
     // --- DOM Elements ---
@@ -51,34 +58,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Logic ---
     function calculate() {
-        // 1. Get Inputs safely
-        const salary = Number(salaryInput.value); // If empty, 0
-        const cash = Number(cashInput.value);
-        const dailyDist = Number(dailyDistInput.value);
-        const daysWeek = Number(daysWeekInput.value);
+        const salary = Number(salaryInput.value) || 0;
+        const cash = Number(cashInput.value) || 0;
+        const dailyDist = Number(dailyDistInput.value) || 0;
+        const daysWeek = Number(daysWeekInput.value) || 0;
 
-        // 2. Mileage
+        // 2. Mileage Calculation
+        // (Daily Round Trip) * Days * 4.345 (avg weeks/month)
         const monthlyMileage = Math.round(dailyDist * 2 * daysWeek * 4.345);
         calcMileageEl.textContent = monthlyMileage.toLocaleString();
 
-        // 3. Recommendation
-        // Budget Formula: (AnnualSalary * 0.7) + Cash
-        const safeBudget = (salary * 0.7) + cash;
+        // 3. Recommendation Logic (Realistic Financial Health)
+        // Formula: Car Price <= (Annual Salary * 0.5) + Cash
+        // We use 0.5 as a "Safe" multiplier. 0.8 is "Risk", 1.0+ is "Car-Poor"
+        const safeBudget = (salary * 0.5) + cash;
         
-        let bestCar = carData[0]; // Walk
+        let bestCar = carData[0]; // Default: Walk
 
-        // Basic Rules
         if (salary === 0 && cash === 0) {
             bestCar = carData[0];
-        } else if (salary < 2400 && cash < 500) {
-            bestCar = carData[1]; // Public
+        } else if (salary < 2800 && cash < 800) {
+            bestCar = carData[1]; // Public Transport
         } else {
-            // Find expensive car that fits budget
-            for (let i = carData.length - 1; i >= 0; i--) {
-                if (carData[i].price <= safeBudget) {
-                    bestCar = carData[i];
-                    break;
-                }
+            // Filter cars that fit the budget
+            const affordableCars = carData.filter(car => car.price <= safeBudget);
+            if (affordableCars.length > 0) {
+                bestCar = affordableCars[affordableCars.length - 1];
+            } else {
+                bestCar = carData[1]; // Fallback to Public if no car fits
             }
         }
 
@@ -86,54 +93,58 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateUI(car, salary, cash, mileage) {
-        // A. Update Monitor
         monitorIcon.textContent = car.icon;
         monitorName.textContent = car.name;
         
-        // Dynamic Message
+        // Message context
         if (car.id === 'walk') {
-             monitorMsg.innerHTML = `아직은 <strong>튼튼한 두 다리</strong>가 최고의 이동수단입니다!<br>시드머니를 모아볼까요?`;
+             monitorMsg.innerHTML = `현재 재정 상태에서는 <strong>튼튼한 두 다리</strong>가 가장 안전합니다.`;
         } else if (car.id === 'public') {
-             monitorMsg.innerHTML = `대중교통이 가장 <strong>경제적인 선택</strong>입니다.<br>차량 구매는 조금 더 신중하게!`;
+             monitorMsg.innerHTML = `연봉 <strong>${salary.toLocaleString()}만원</strong>에는 대중교통이 최고의 재테크입니다.`;
+        } else if (car.price > (salary * 0.8) + cash) {
+             monitorMsg.innerHTML = `조금 무리하면 <strong>${car.name}</strong>도 가능하지만, 카푸어의 위험이 있습니다!`;
         } else {
-             monitorMsg.innerHTML = `연봉 <strong>${salary.toLocaleString()}만원</strong> 기준,<br>이 차가 딱 적당해 보입니다!`;
+             monitorMsg.innerHTML = `연봉 <strong>${salary.toLocaleString()}만원</strong> 기준, 가장 <strong>현명한 선택</strong>입니다.`;
         }
 
-        // B. Calculate Costs
+        // Calculate detailed monthly costs
         let costs = { inst: 0, ins: 0, tax: 0, fuel: 0, maint: 0 };
         
-        if (car.price > 0 || car.id === 'public') {
-            if (car.id === 'public') {
-                costs.maint = 100000; // Fixed public transport cost
-            } else {
-                // Installment
-                const loan = Math.max(0, car.price - cash);
-                if (loan > 0) {
-                    const r = CONSTANTS.INTEREST_RATE / 12;
-                    const n = CONSTANTS.INSTALLMENT_MONTHS;
-                    costs.inst = (loan * r * Math.pow(1+r, n) / (Math.pow(1+r, n) - 1)) * 10000;
-                }
-                
-                // Monthly costs
-                costs.ins = (car.insurance / 12) * 10000;
-                costs.tax = (car.taxYear / 12) * 10000;
-                costs.fuel = (mileage / car.efficiency) * CONSTANTS.FUEL_PRICE;
-                costs.maint = (car.maintenance * 10000) + (mileage * 40);
+        if (car.id === 'public') {
+            costs.maint = CONSTANTS.PUBLIC_TRANS_COST;
+        } else if (car.price > 0) {
+            // A. Installment (PMT Formula)
+            const loan = Math.max(0, car.price - cash);
+            if (loan > 0) {
+                const r = CONSTANTS.INTEREST_RATE / 12;
+                const n = CONSTANTS.INSTALLMENT_MONTHS;
+                costs.inst = (loan * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1) * 10000;
             }
+
+            // B. Insurance (Annual to Monthly)
+            costs.ins = (car.insurance / 12) * 10000;
+
+            // C. Tax (Annual to Monthly)
+            costs.tax = (car.taxYear / 12) * 10000;
+
+            // D. Fuel (Distance / Efficiency * Price)
+            if (car.efficiency > 0) {
+                // For Electric Cars (Model 3), fuel is electricity. Efficiency is KM/kWh.
+                // Simplified: 1kWh = 200 KRW
+                const energyPrice = car.id === 'model3' ? 300 : CONSTANTS.FUEL_PRICE;
+                costs.fuel = (mileage / car.efficiency) * energyPrice;
+            }
+
+            // E. Maintenance (Base + Mileage dependent)
+            costs.maint = (car.maintenance * 10000 / 12) + (mileage * CONSTANTS.MAINT_BASE_RATE);
         }
 
-        // C. Update Charts
-        const total = costs.inst + costs.ins + costs.tax + costs.fuel + costs.maint;
+        const total = Object.values(costs).reduce((a, b) => a + b, 0);
         totalCostEl.textContent = Math.round(total).toLocaleString();
 
-        const safeTotal = total > 0 ? total : 1;
-
         const updateBar = (key, val) => {
-            const percent = (val / safeTotal) * 100;
-            // Visual Minimum 5% if val > 0
-            const visPercent = val > 0 ? Math.max(percent, 5) : 0;
-            
-            bars[key].style.width = `${visPercent}%`;
+            const percent = total > 0 ? (val / total) * 100 : 0;
+            bars[key].style.width = `${percent}%`;
             vals[key].textContent = val > 0 ? `${Math.round(val).toLocaleString()}원` : '0원';
         };
 
@@ -143,6 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateBar('fuel', costs.fuel);
         updateBar('maintenance', costs.maint);
     }
+
 
     // --- Listeners ---
     [salaryInput, cashInput, dailyDistInput, daysWeekInput].forEach(el => {
