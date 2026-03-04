@@ -230,45 +230,37 @@ document.addEventListener('DOMContentLoaded', () => {
         aiInput.value = "";
         isAiThinking = true;
 
-        console.log("AI 상담 요청 시작...", { query });
-
         const typingDiv = addTypingIndicator();
 
         try {
-            const contextPrompt = `
-                너는 자동차 구매 및 금융 전문 컨설턴트야. 사용자의 현재 재정 상태를 바탕으로 아주 현실적이고 때로는 따끔하게(팩폭) 조언을 해줘야 해.
-                상담은 1회성으로 끝날 것이므로, 단 한 번의 답변에 모든 핵심적인 조언을 담아줘.
-                [사용자 정보]
-                - 나이: ${ageInput.value}세, 운전경력: ${expInput.options[expInput.selectedIndex].text}
-                - 연봉: ${appState.salary}만원, 현재 보유 현금: ${appState.cash}만원
-                - 현재 보고 있는 차: ${currentBestCar.name} (차량가: ${currentBestCar.price}만원)
-                - 할부 설정: ${instMonthsInput.options[instMonthsInput.selectedIndex].text}
-                - 예상 월 유지비: ${appState.totalMonthly.toLocaleString()}원
-                - 현재 안전 등급: ${appState.safetyLevel}
+            // 서버로 보낼 사용자 데이터 묶음
+            const userData = {
+                age: ageInput.value,
+                experience: expInput.options[expInput.selectedIndex].text,
+                salary: appState.salary,
+                cash: appState.cash,
+                currentCar: currentBestCar.name,
+                carPrice: currentBestCar.price,
+                installment: instMonthsInput.options[instMonthsInput.selectedIndex].text,
+                monthlyCost: appState.totalMonthly,
+                safetyLevel: appState.safetyLevel
+            };
 
-                사용자의 질문에 대해 위 데이터를 바탕으로 통계적, 금융적으로 분석해서 한국어로 답변해줘.
-            `;
-
-            const API_URL = "/api/chat";
-
-            const response = await fetch(API_URL, {
+            const response = await fetch("/api/chat", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ prompt: contextPrompt, query: query })
+                body: JSON.stringify({ userData, query })
             });
 
             const data = await response.json();
             typingDiv.remove();
 
             if (data.error) {
-                console.error("AI 에러 응답:", data.error);
                 addMessage('bot', `상담 중 오류가 발생했어요: ${data.error}`);
             } else {
-                console.log("AI 응답 성공!");
                 addMessage('bot', data.answer);
-                consultationCount++; // 카운트 증가
+                consultationCount++;
                 
-                // 입력창 및 버튼 비활성화
                 aiInput.disabled = true;
                 aiInput.placeholder = "상담이 완료되었습니다.";
                 btnSendAi.disabled = true;
@@ -277,7 +269,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 addMessage('bot', "💡 정밀 진단이 완료되었습니다. 분석 결과를 바탕으로 현명한 선택 하시길 바랍니다!");
             }
         } catch (err) {
-            console.error("네트워크 에러:", err);
             typingDiv.remove();
             addMessage('bot', "서버와의 연결이 원활하지 않습니다. 잠시 후 다시 시도해 주세요.");
         } finally {
