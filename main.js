@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("App Loaded v6.1 - Action Oriented AI Consulting");
+    console.log("App Loaded v7.0 - Budget-Based Recommendation System");
 
     const carData = [
         { id: 'walk', name: '튼튼한 두 다리', price: 0, cc: 0, taxYear: 0, insurance: 0, efficiency: 0, maintenance: 0, icon: '🚶', img: '' },
@@ -15,49 +15,55 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'model3', name: '테슬라 모델 3', price: 6200, cc: 0, taxYear: 13, insurance: 180, efficiency: 18, maintenance: 5, icon: '🔋', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Tesla_Model_3_white_%282%29.jpg/640px-Tesla_Model_3_white_%282%29.jpg' },
         { id: 'eclass', name: '벤츠 E-Class', price: 8700, cc: 1999, taxYear: 52, insurance: 250, efficiency: 10, maintenance: 50, icon: '🌟', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Mercedes-Benz_E_220_d_Avantgarde_%28W_213%29_%E2%80%93_Frontansicht%2C_15._Mai_2016%2C_D%C3%BCsseldorf.jpg/640px-Mercedes-Benz_E_220_d_Avantgarde_%28W_213%29_%E2%80%93_Frontansicht%2C_15._Mai_2016%2C_D%C3%BCsseldorf.jpg' },
         { id: 'cayenne', name: '포르쉐 카이엔', price: 15200, cc: 2995, taxYear: 78, insurance: 350, efficiency: 7, maintenance: 80, icon: '🚀', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Porsche_Cayenne_S_%2892A%29_facelift_%E2%80%93_Frontansicht%2C_11._Oktober_2015%2C_D%C3%BCsseldorf.jpg/640px-Porsche_Cayenne_S_%2892A%29_facelift_%E2%80%93_Frontansicht%2C_11._Oktober_2015%2C_D%C3%BCsseldorf.jpg' },
-        { id: 'ferrari', name: '페라리 F8', price: 40200, cc: 3902, taxYear: 101, insurance: 1000, efficiency: 5, maintenance: 300, icon: '🏎️', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Ferrari_F8_Tributo_Geneva_International_Motor_Show_2019_Le_Grand-Saconnex_%28GIMS0029%29.jpg/640px-Ferrari_F8_Tributo_Geneva_International_Motor_Show_2019_Le_Grand-Saconnex_%28GIMS0029%29.jpg' },
-        { id: 'yacht', name: '럭셔리 요트 (350억)', price: 3500200, cc: 0, taxYear: 5000, insurance: 50000, efficiency: 0.1, maintenance: 50000, icon: '🛥️', img: '' },
-        { id: 'helicopter', name: '에어버스 헬기 (500억)', price: 5000200, cc: 0, taxYear: 8000, insurance: 80000, efficiency: 0.1, maintenance: 80000, icon: '🚁', img: '' },
-        { id: 'rocket', name: '스타십 (10조)', price: 1000000200, cc: 0, taxYear: 0, insurance: 1000000, efficiency: 0.001, maintenance: 5000000, icon: '🚀', img: '' },
-        { id: 'earth', name: '지구 (The Earth)', price: 500000000200, cc: 0, taxYear: 0, insurance: 0, efficiency: 1, maintenance: 0, icon: '🌍', img: '' },
-        { id: 'galaxy', name: '안드로메다 은하', price: 999999999999, cc: 0, taxYear: 0, insurance: 0, efficiency: 1, maintenance: 0, icon: '🌌', img: '' },
-        { id: 'multiverse', name: '멀티버스 (평행우주)', price: 9999999999999, cc: 0, taxYear: 0, insurance: 0, efficiency: 1, maintenance: 0, icon: '♾️', img: '' }
+        { id: 'ferrari', name: '페라리 F8', price: 40200, cc: 3902, taxYear: 101, insurance: 1000, efficiency: 5, maintenance: 300, icon: '🏎️', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Ferrari_F8_Tributo_Geneva_International_Motor_Show_2019_Le_Grand-Saconnex_%28GIMS0029%29.jpg/640px-Ferrari_F8_Tributo_Geneva_International_Motor_Show_2019_Le_Grand-Saconnex_%28GIMS0029%29.jpg' }
     ];
 
-    const CONSTANTS = { FUEL_PRICE: 1650, INTEREST_RATE: 0.055, MAINT_BASE_RATE: 35, PUBLIC_TRANS_COST: 125000 };
+    const CONSTANTS = { FUEL_PRICE: 1650, INTEREST_RATE: 0.055, MAINT_BASE_RATE: 35 };
     let pushLevel = 0; let mileageMode = 'calc'; let currentBestCar = carData[0];
-    let appState = { salary: 0, cash: 0, totalMonthly: 0, safetyLevel: '평가 대기중' };
+    let appState = { salary: 0, cash: 0, monthlyBudget: 500000, totalMonthly: 0, safetyLevel: '평가 대기중' };
 
     // Inputs
-    const ageInput = document.getElementById('age'); const expInput = document.getElementById('experience');
-    const salaryInput = document.getElementById('salary'); const cashInput = document.getElementById('cash');
-    const instMonthsInput = document.getElementById('installment-months'); const dailyDistInput = document.getElementById('daily-distance');
-    const daysWeekInput = document.getElementById('days-per-week'); const manualMileageInput = document.getElementById('manual-mileage');
+    const ageInput = document.getElementById('age'); 
+    const expInput = document.getElementById('experience');
+    const salaryInput = document.getElementById('salary'); 
+    const cashInput = document.getElementById('cash');
+    const budgetInput = document.getElementById('monthly-budget');
+    const instMonthsInput = document.getElementById('installment-months'); 
+    const dailyDistInput = document.getElementById('daily-distance');
+    const daysWeekInput = document.getElementById('days-per-week'); 
+    const manualMileageInput = document.getElementById('manual-mileage');
     
     // UI elements
-    const monitorIcon = document.getElementById('monitor-icon'); const monitorImg = document.getElementById('monitor-img');
-    const monitorName = document.getElementById('monitor-car-name'); const monitorPrice = document.getElementById('car-price-display');
-    const monitorMsg = document.getElementById('monitor-message'); const monitorBg = document.getElementById('monitor-bg');
-    const safetyBadge = document.getElementById('safety-badge'); const calcMileageEl = document.getElementById('calculated-mileage');
+    const monitorIcon = document.getElementById('monitor-icon'); 
+    const monitorImg = document.getElementById('monitor-img');
+    const monitorName = document.getElementById('monitor-car-name'); 
+    const monitorPrice = document.getElementById('car-price-display');
+    const monitorMsg = document.getElementById('monitor-message'); 
+    const monitorBg = document.getElementById('monitor-bg');
+    const safetyBadge = document.getElementById('safety-badge'); 
+    const calcMileageEl = document.getElementById('calculated-mileage');
     const totalCostEl = document.getElementById('total-monthly-cost'); 
+    const displayBudgetEl = document.getElementById('display-monthly-budget');
+    const budgetDiffEl = document.getElementById('budget-diff');
     
-    const revealArea = document.getElementById('reveal-area'); const btnRevealPush = document.getElementById('btn-reveal-push');
+    const revealArea = document.getElementById('reveal-area'); 
+    const btnRevealPush = document.getElementById('btn-reveal-push');
     const pushSlot = document.getElementById('push-slot');
 
     const bars = { installment: document.getElementById('bar-installment'), insurance: document.getElementById('bar-insurance'), tax: document.getElementById('bar-tax'), fuel: document.getElementById('bar-fuel'), maintenance: document.getElementById('bar-maintenance') };
     const vals = { installment: document.getElementById('val-installment'), insurance: document.getElementById('val-insurance'), tax: document.getElementById('val-tax'), fuel: document.getElementById('val-fuel'), maintenance: document.getElementById('val-maintenance') };
 
-    const PUSH_MESSAGES = ["당신의 한계는 어디까지인가요?", "오... 조금 무리하시는데요?", "슬슬 카푸어 냄새가 납니다.", "제정신이 아니시군요!", "이젠 차가 아니어도 상관없나 보죠?", "우주로 가버릿!", "당신은 신입니까?", "존재의 이유를 찾아서...", "무한한 공간 저 너머로!", "차원을 넘어서는 중...", "해탈의 경지입니다."];
+    const PUSH_MESSAGES = ["당신의 한계는 어디까지인가요?", "오... 조금 무리하시는데요?", "슬슬 카푸어 냄새가 납니다.", "제정신이 아니시군요!", "이젠 차가 아니어도 상관없나 보죠?", "우주로 가버릿!"];
 
-    // Functions
     function calculate() {
         const salary = Number(salaryInput.value) || 0;
         const cash = Number(cashInput.value) || 0;
+        const monthlyBudget = (Number(budgetInput.value) || 0) * 10000;
         const instMonths = Number(instMonthsInput.value) || 0;
         const age = Number(ageInput.value) || 30;
         const exp = Number(expInput.value) || 3;
         
-        appState.salary = salary; appState.cash = cash;
+        appState.salary = salary; appState.cash = cash; appState.monthlyBudget = monthlyBudget;
 
         let mileage = 0;
         if (mileageMode === 'calc') {
@@ -69,19 +75,53 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         calcMileageEl.textContent = mileage.toLocaleString();
 
-        const safeBudget = (salary * 0.5) + cash;
-        const affordable = carData.filter(car => car.price <= safeBudget);
-        let baseIdx = affordable.length > 0 ? carData.indexOf(affordable[affordable.length - 1]) : 0;
+        // New Recommendation Logic: Find best car that fits within the monthly budget
+        let bestIdx = 0;
+        for (let i = 0; i < carData.length; i++) {
+            const car = carData[i];
+            const costs = getEstimatedCosts(car, cash, instMonths, age, exp, mileage);
+            const total = Object.values(costs).reduce((a, b) => a + b, 0);
+            
+            // if total monthly cost <= monthly budget, it's affordable
+            if (total <= monthlyBudget || car.price === 0) {
+                bestIdx = i;
+            } else {
+                break; // Stop when it's no longer affordable
+            }
+        }
         
-        let jump = pushLevel > 6 ? 6 + Math.floor((pushLevel - 6) / 3) : pushLevel;
-        currentBestCar = carData[Math.min(carData.length - 1, baseIdx + jump)];
+        let jump = pushLevel;
+        currentBestCar = carData[Math.min(carData.length - 1, bestIdx + jump)];
 
-        updateUI(currentBestCar, salary, cash, mileage, instMonths, age, exp);
+        updateUI(currentBestCar, salary, cash, mileage, instMonths, age, exp, monthlyBudget);
     }
 
-    function updateUI(car, salary, cash, mileage, instMonths, age, exp) {
+    function getEstimatedCosts(car, cash, instMonths, age, exp, mileage) {
+        let costs = { inst: 0, ins: 0, tax: 0, fuel: 0, maint: 0 };
+        if (car.price === 0) {
+            if (car.id === 'public') costs.maint = 125000;
+            return costs;
+        }
+
+        let af = age < 21 ? 2.5 : age < 26 ? 1.8 : age < 30 ? 1.2 : age > 60 ? 1.3 : 1.0;
+        let ef = exp == 0 ? 1.5 : exp < 3 ? 1.2 : exp >= 10 ? 0.7 : 1.0;
+
+        const loan = Math.max(0, car.price - cash);
+        if (loan > 0 && instMonths > 0) {
+            const r = 0.055/12; const n = instMonths;
+            costs.inst = (loan * r * Math.pow(1+r, n)) / (Math.pow(1+r, n)-1) * 10000;
+        }
+        costs.ins = (car.insurance/12)*10000*af*ef;
+        costs.tax = (car.taxYear/12)*10000;
+        costs.fuel = car.efficiency > 0 ? (mileage/car.efficiency)*1650 : 0;
+        costs.maint = (car.maintenance*10000/12) + (mileage*35);
+
+        return costs;
+    }
+
+    function updateUI(car, salary, cash, mileage, instMonths, age, exp, monthlyBudget) {
         monitorName.textContent = car.name;
-        monitorPrice.textContent = car.price >= 100000000 ? `차량가: 약 ${(car.price / 100000000).toFixed(1)}조 원` : car.price >= 10000 ? `차량가: 약 ${(car.price / 10000).toFixed(1)}억 원` : `차량가: ${car.price.toLocaleString()}만원`;
+        monitorPrice.textContent = `차량가: ${car.price.toLocaleString()}만원`;
 
         if (car.img) {
             monitorImg.src = car.img; monitorImg.classList.remove('hidden'); monitorIcon.classList.add('hidden');
@@ -90,100 +130,64 @@ document.addEventListener('DOMContentLoaded', () => {
             monitorImg.classList.add('hidden'); monitorIcon.classList.remove('hidden'); monitorIcon.textContent = car.icon;
         }
 
-        let level = 'safe'; let badge = '✅ 경제적 자유';
-        if (car.price > 0) {
-            const r = car.price / ((salary * 0.6) + cash + 1);
-            if (r < 0.8) { level = 'safe'; badge = '✅ 안전'; }
-            else if (r < 1.1) { level = 'warning'; badge = '⚠️ 주의'; }
-            else if (r < 1.6) { level = 'danger'; badge = '🚫 위험'; }
-            else { level = 'bankrupt'; badge = '💀 파산(카푸어)'; }
-        }
-        if (car.price > 1000000) { badge = '🌌 초월적 존재'; level = 'bankrupt'; }
-        monitorBg.className = `monitor-section ${level}`; safetyBadge.textContent = badge;
-        appState.safetyLevel = badge;
-        monitorMsg.innerHTML = pushLevel > 0 ? `무리하기 <strong>${pushLevel}단계</strong> 진입!<br>${PUSH_MESSAGES[Math.min(pushLevel, PUSH_MESSAGES.length-1)]}` : `연봉 <strong>${salary.toLocaleString()}만원</strong> 기준,<br>현명한 소비의 정석입니다.`;
-
-        let af = age < 21 ? 2.5 : age < 26 ? 1.8 : age < 30 ? 1.2 : age > 60 ? 1.3 : 1.0;
-        let ef = exp == 0 ? 1.5 : exp < 3 ? 1.2 : exp >= 10 ? 0.7 : 1.0;
-
-        let costs = { inst: 0, ins: 0, tax: 0, fuel: 0, maint: 0 };
-        let det = { inst: '', ins: '', tax: '', fuel: '', maint: '' };
-        
-        if (car.price > 0) {
-            const loan = Math.max(0, car.price - cash);
-            if (loan > 0 && instMonths > 0) {
-                const r = 0.055/12; const n = instMonths;
-                costs.inst = (loan * r * Math.pow(1+r, n)) / (Math.pow(1+r, n)-1) * 10000;
-                det.inst = `대출금: ${loan.toLocaleString()}만원 / ${n}개월`;
-            } else { det.inst = instMonths === 0 ? "일시불 구매" : "전액 현금 구매"; }
-            costs.ins = (car.insurance/12)*10000*af*ef; det.ins = `나이 계수: x${af.toFixed(1)}\n경력 계수: x${ef.toFixed(1)}`;
-            costs.tax = (car.taxYear/12)*10000; det.tax = `연 세금: ${car.taxYear}만원 기준`;
-            costs.fuel = car.efficiency > 0 ? (mileage/car.efficiency)*(car.price > 1000000 ? 300 : 1650) : 0; det.fuel = `연비: ${car.efficiency}km/L`;
-            costs.maint = (car.maintenance*10000/12) + (mileage*35); det.maint = `정비: ${car.maintenance}만/년 + 거리비례`;
-        } else if (car.id === 'public') { costs.maint = 125000; det.maint = "대중교통 월정액"; }
-
+        const costs = getEstimatedCosts(car, cash, instMonths, age, exp, mileage);
         const total = Object.values(costs).reduce((a, b) => a + b, 0);
         appState.totalMonthly = Math.round(total);
-        totalCostEl.textContent = isNaN(total) ? "0" : Math.round(total).toLocaleString();
+        totalCostEl.textContent = Math.round(total).toLocaleString();
 
-        const updateB = (key, val, d) => {
+        // Budget Balance UI
+        displayBudgetEl.textContent = monthlyBudget.toLocaleString() + "원";
+        const diff = monthlyBudget - total;
+        if (diff >= 0) {
+            budgetDiffEl.textContent = `+${Math.round(diff).toLocaleString()}원 여유`;
+            budgetDiffEl.className = "balance-val plus";
+        } else {
+            budgetDiffEl.textContent = `${Math.round(diff).toLocaleString()}원 초과(적자)`;
+            budgetDiffEl.className = "balance-val minus";
+        }
+
+        let level = 'safe'; let badge = '✅ 경제적 자유';
+        const r = total / (monthlyBudget + 1);
+        if (r < 0.8) { level = 'safe'; badge = '✅ 안전'; }
+        else if (r <= 1.0) { level = 'warning'; badge = '⚠️ 주의'; }
+        else if (r < 1.3) { level = 'danger'; badge = '🚫 위험'; }
+        else { level = 'bankrupt'; badge = '💀 파산(카푸어)'; }
+        
+        monitorBg.className = `monitor-section ${level}`; safetyBadge.textContent = badge;
+        appState.safetyLevel = badge;
+        monitorMsg.innerHTML = pushLevel > 0 ? `무리하기 <strong>${pushLevel}단계</strong> 진입!<br>${PUSH_MESSAGES[Math.min(pushLevel, PUSH_MESSAGES.length-1)]}` : `월 <strong>${(monthlyBudget/10000).toLocaleString()}만원</strong> 예산 내에서<br>최적의 선택입니다.`;
+
+        const updateB = (key, val) => {
             const p = total > 0 ? (val/total)*100 : 0;
             bars[key].style.width = `${p}%`;
             vals[key].textContent = `${Math.round(val).toLocaleString()}원`;
-            const row = bars[key].closest('.chart-row');
-            let tt = row.querySelector('.chart-tooltip') || document.createElement('div');
-            if (!row.querySelector('.chart-tooltip')) { tt.className = 'chart-tooltip'; row.appendChild(tt); }
-            tt.textContent = d || '산출 근거 없음';
         };
-        updateB('installment', costs.inst, det.inst); updateB('insurance', costs.ins, det.ins); updateB('tax', costs.tax, det.tax); updateB('fuel', costs.fuel, det.fuel); updateB('maintenance', costs.maint, det.maint);
+        updateB('installment', costs.inst); updateB('insurance', costs.ins); updateB('tax', costs.tax); updateB('fuel', costs.fuel); updateB('maintenance', costs.maint);
     }
 
     function createPushContainer() {
+        if (document.getElementById('push-container')) return;
         const div = document.createElement('div');
         div.id = 'push-container';
         div.className = 'push-container';
         div.innerHTML = `
             <div class="push-main-row">
-                <button id="push-limit-btn" class="btn-push">
-                    🔥 한 단계 더 무리하기 (<span id="push-count">${pushLevel}</span>)
-                </button>
+                <button id="push-limit-btn" class="btn-push">🔥 한 단계 더 무리하기 (<span id="push-count">${pushLevel}</span>)</button>
                 <button id="push-reset-btn" class="btn-reset" title="초기화">🔄</button>
             </div>
             <p id="push-dynamic-msg" class="push-tip">${PUSH_MESSAGES[0]}</p>
         `;
         pushSlot.appendChild(div);
-
-        // Bind events
-        document.getElementById('push-limit-btn').addEventListener('click', () => {
-            pushLevel++;
-            document.getElementById('push-count').textContent = pushLevel;
-            document.getElementById('push-dynamic-msg').textContent = PUSH_MESSAGES[Math.min(pushLevel, PUSH_MESSAGES.length-1)];
-            calculate();
-        });
-        document.getElementById('push-reset-btn').addEventListener('click', () => {
-            pushLevel = 0;
-            document.getElementById('push-count').textContent = 0;
-            document.getElementById('push-dynamic-msg').textContent = PUSH_MESSAGES[0];
-            calculate();
-        });
+        document.getElementById('push-limit-btn').addEventListener('click', () => { pushLevel++; document.getElementById('push-count').textContent = pushLevel; calculate(); });
+        document.getElementById('push-reset-btn').addEventListener('click', () => { pushLevel = 0; document.getElementById('push-count').textContent = 0; calculate(); });
     }
 
     // Listeners
-    [ageInput, expInput, salaryInput, cashInput, instMonthsInput, dailyDistInput, daysWeekInput, manualMileageInput].forEach(el => {
+    [ageInput, expInput, salaryInput, cashInput, budgetInput, instMonthsInput, dailyDistInput, daysWeekInput, manualMileageInput].forEach(el => {
         el.addEventListener('input', calculate); el.addEventListener('change', calculate);
     });
 
-    instMonthsInput.addEventListener('change', () => {
-        const isFull = instMonthsInput.value === "0";
-        cashInput.disabled = isFull;
-        if (isFull) cashInput.value = "";
-        calculate();
-    });
-
-    btnRevealPush.addEventListener('click', () => {
-        revealArea.classList.add('hidden');
-        createPushContainer();
-    });
+    btnRevealPush.addEventListener('click', () => { revealArea.classList.add('hidden'); createPushContainer(); });
 
     document.getElementById('mode-calc').addEventListener('click', () => {
         mileageMode = 'calc';
@@ -216,16 +220,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     aiFab.addEventListener('click', () => {
         aiModal.classList.toggle('hidden');
-        if (!aiModal.classList.contains('hidden')) {
-            aiChatBody.scrollTop = aiChatBody.scrollHeight;
-        }
+        if (!aiModal.classList.contains('hidden')) { aiChatBody.scrollTop = aiChatBody.scrollHeight; }
     });
-    
     btnCloseAi.addEventListener('click', () => aiModal.classList.add('hidden'));
 
-    // 내 정보 가져오기 버튼 로직
     btnFetchData.addEventListener('click', () => {
-        const summary = `나이: ${ageInput.value}세 / 연봉: ${appState.salary}만원 / 보유자산: ${appState.cash}만원 / 관심차종: ${currentBestCar.name} (${currentBestCar.price}만원) / 할부: ${instMonthsInput.options[instMonthsInput.selectedIndex].text} / 예상 월유지비: ${appState.totalMonthly.toLocaleString()}원 / 안전등급: ${appState.safetyLevel}\n\n이 조건일 때 이 차를 사도 괜찮을지 전문적으로 분석해줘.`;
+        const summary = `나이: ${ageInput.value}세 / 연봉: ${appState.salary}만원 / 보유자산: ${appState.cash}만원 / 월 충당가능액: ${(appState.monthlyBudget/10000)}만원 / 관심차종: ${currentBestCar.name} (${currentBestCar.price}만원) / 예상 월유지비: ${appState.totalMonthly.toLocaleString()}원 / 안전등급: ${appState.safetyLevel}\n\n이 조건일 때 이 차를 유지하는 게 현실적으로 가능할지 분석해줘.`;
         aiInput.value = summary;
         aiInput.focus();
     });
@@ -233,61 +233,35 @@ document.addEventListener('DOMContentLoaded', () => {
     async function sendToAi() {
         const query = aiInput.value.trim();
         if (!query || isAiThinking) return;
-
-        if (consultationCount >= 1) {
-            alert("정밀 상담은 1회만 가능합니다. 다시 분석하시려면 페이지를 새로고침 해주세요!");
-            return;
-        }
+        if (consultationCount >= 1) { alert("정밀 상담은 1회만 가능합니다. 페이지를 새로고침 해주세요!"); return; }
 
         addMessage('user', query);
         aiInput.value = "";
         isAiThinking = true;
-
         const typingDiv = addTypingIndicator();
 
         try {
             const userData = {
-                age: ageInput.value,
-                experience: expInput.options[expInput.selectedIndex].text,
-                salary: appState.salary,
-                cash: appState.cash,
-                currentCar: currentBestCar.name,
-                carPrice: currentBestCar.price,
-                installment: instMonthsInput.options[instMonthsInput.selectedIndex].text,
-                monthlyCost: appState.totalMonthly,
-                safetyLevel: appState.safetyLevel
+                age: ageInput.value, salary: appState.salary, cash: appState.cash, monthlyBudget: appState.monthlyBudget,
+                currentCar: currentBestCar.name, carPrice: currentBestCar.price, installment: instMonthsInput.options[instMonthsInput.selectedIndex].text,
+                monthlyCost: appState.totalMonthly, safetyLevel: appState.safetyLevel
             };
-
             const response = await fetch("/api/chat", {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userData, query })
             });
-
             const data = await response.json();
             typingDiv.remove();
-
-            if (data.error) {
-                addMessage('bot', `상담 중 오류가 발생했어요: ${data.error}`);
-            } else {
+            if (data.error) { addMessage('bot', `오류: ${data.error}`); }
+            else {
                 addMessage('bot', data.answer);
                 consultationCount++;
-                
-                aiInput.disabled = true;
-                aiInput.placeholder = "상담이 완료되었습니다.";
-                btnSendAi.disabled = true;
-                btnSendAi.style.opacity = "0.5";
-                btnFetchData.disabled = true;
-                btnFetchData.style.opacity = "0.5";
-                
-                addMessage('bot', "✨ 상담 마지막에 적힌 요약을 복사하여 사용하시는 AI에게 직접 마저 상담을 받아보세요!");
+                aiInput.disabled = true; aiInput.placeholder = "상담 완료";
+                btnSendAi.disabled = true; btnSendAi.style.opacity = "0.5";
+                addMessage('bot', "✨ 상담 마지막에 적힌 요약을 복사하여 개인 AI에게 직접 마저 상담을 받아보세요!");
             }
-        } catch (err) {
-            typingDiv.remove();
-            addMessage('bot', "서버와의 연결이 원활하지 않습니다. 잠시 후 다시 시도해 주세요.");
-        } finally {
-            isAiThinking = false;
-        }
+        } catch (err) { typingDiv.remove(); addMessage('bot', "연결 실패. 다시 시도해 주세요."); }
+        finally { isAiThinking = false; }
     }
 
     function addMessage(sender, text) {

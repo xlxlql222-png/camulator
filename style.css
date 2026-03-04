@@ -101,6 +101,36 @@ input:disabled { opacity: 0.5; cursor: not-allowed; }
 .seo-card { background: white; padding: 20px; border-radius: var(--radius-lg); border-left: 5px solid var(--primary); margin-top: 20px; }
 .site-footer { text-align: center; font-size: 0.8rem; color: var(--text-sub); margin: 40px 0; }
 
+/* Result - Budget Balance */
+.budget-balance-area {
+    background: #f8f9fa;
+    border-radius: var(--radius-md);
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border: 1px solid #eee;
+}
+.balance-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-sub);
+}
+.balance-row.status {
+    padding-top: 8px;
+    border-top: 1px dashed #ddd;
+    color: var(--text-main);
+    font-size: 0.95rem;
+}
+.balance-val.plus { color: #27ae60; font-weight: 800; }
+.balance-val.minus { color: #e74c3c; font-weight: 800; }
+
+/* Input Tip */
+.input-tip { font-size: 0.7rem; color: var(--primary); margin-top: 4px; font-weight: 600; opacity: 0.8; }
+
 /* Action Buttons Row */
 .action-buttons-row {
     display: flex; gap: 10px; justify-content: center; align-items: stretch;

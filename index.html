@@ -16,10 +16,6 @@
         <header class="site-header">
             <h1 class="logo">🚗 카뮬레이터</h1>
             <p class="subtitle">당신의 지갑을 지켜주는 현실적인 계산기</p>
-            <!-- AI Consulting Button moved here -->
-            <div id="ai-fab" class="ai-fab" title="AI 상담 시작">
-                <span class="ai-icon">✨</span>
-            </div>
         </header>
 
         <main>
@@ -73,6 +69,13 @@
                         <input type="number" id="cash" placeholder="예: 500" inputmode="numeric">
                     </div>
                 </div>
+                
+                <div class="input-group" style="margin-bottom: 15px;">
+                    <label for="monthly-budget" style="color: var(--primary); font-weight: 900;">💳 월 충당 가능 금액 (만원)</label>
+                    <input type="number" id="monthly-budget" placeholder="예: 80" value="50" inputmode="numeric" style="border: 2px solid var(--primary-light);">
+                    <p class="input-tip">매달 차 유지비로 최대 얼마까지 쓸 수 있나요?</p>
+                </div>
+
                 <div class="input-group">
                     <label for="installment-months">할부 기간 (개월)</label>
                     <select id="installment-months">
@@ -132,6 +135,18 @@
                 <div class="total-cost-display">
                     <span id="total-monthly-cost">0</span>
                     <span class="unit">원 / 월</span>
+                </div>
+
+                <!-- Budget Balance Display -->
+                <div id="budget-balance-area" class="budget-balance-area">
+                    <div class="balance-row">
+                        <span>내 충당 가능 금액:</span>
+                        <span id="display-monthly-budget">0원</span>
+                    </div>
+                    <div class="balance-row status">
+                        <span>재정 여유:</span>
+                        <span id="budget-diff" class="balance-val">0원</span>
+                    </div>
                 </div>
 
                 <div class="chart-container">
