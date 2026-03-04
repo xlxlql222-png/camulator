@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("App Loaded v6.0 - AI Consulting Integration");
+    console.log("App Loaded v6.1 - Action Oriented AI Consulting");
 
     const carData = [
         { id: 'walk', name: '튼튼한 두 다리', price: 0, cc: 0, taxYear: 0, insurance: 0, efficiency: 0, maintenance: 0, icon: '🚶', img: '' },
@@ -214,7 +214,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let isAiThinking = false;
     let consultationCount = 0;
 
-    aiFab.addEventListener('click', () => aiModal.classList.toggle('hidden'));
+    aiFab.addEventListener('click', () => {
+        aiModal.classList.toggle('hidden');
+        if (!aiModal.classList.contains('hidden')) {
+            aiChatBody.scrollTop = aiChatBody.scrollHeight;
+        }
+    });
+    
     btnCloseAi.addEventListener('click', () => aiModal.classList.add('hidden'));
 
     // 내 정보 가져오기 버튼 로직
