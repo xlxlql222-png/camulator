@@ -192,6 +192,29 @@
         </footer>
     </div>
 
+    <!-- AI Consulting UI -->
+    <div id="ai-fab" class="ai-fab" title="AI 상담 시작">
+        <span class="ai-icon">✨</span>
+    </div>
+
+    <div id="ai-modal" class="ai-modal hidden">
+        <div class="ai-modal-header">
+            <h4>✨ AI 구매 카운슬러</h4>
+            <div class="header-actions">
+                <button id="btn-close-ai">✕</button>
+            </div>
+        </div>
+        <div id="ai-chat-body" class="ai-modal-body">
+            <div class="ai-msg bot">
+                안녕하세요! 현재 입력하신 재정 상태와 차량 정보를 바탕으로 전문적인 상담을 도와드릴게요. 궁금한 점을 물어보세요!
+            </div>
+        </div>
+        <div class="ai-modal-footer">
+            <input type="text" id="ai-input" placeholder="예: 이 차 사면 카푸어 될까요?">
+            <button id="btn-send-ai">전송</button>
+        </div>
+    </div>
+
     <script src="main.js"></script>
 </body>
 </html>

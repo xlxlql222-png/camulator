@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("App Loaded v5.3 - Deployment Ready Edition");
+    console.log("App Loaded v6.0 - AI Consulting Integration");
 
     const carData = [
         { id: 'walk', name: '튼튼한 두 다리', price: 0, cc: 0, taxYear: 0, insurance: 0, efficiency: 0, maintenance: 0, icon: '🚶', img: '' },
@@ -25,7 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     const CONSTANTS = { FUEL_PRICE: 1650, INTEREST_RATE: 0.055, MAINT_BASE_RATE: 35, PUBLIC_TRANS_COST: 125000 };
-    let pushLevel = 0; let mileageMode = 'calc';
+    let pushLevel = 0; let mileageMode = 'calc'; let currentBestCar = carData[0];
+    let appState = { salary: 0, cash: 0, totalMonthly: 0, safetyLevel: '평가 대기중' };
 
     // Inputs
     const ageInput = document.getElementById('age'); const expInput = document.getElementById('experience');
@@ -56,6 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const age = Number(ageInput.value) || 30;
         const exp = Number(expInput.value) || 3;
         
+        appState.salary = salary; appState.cash = cash;
+
         let mileage = 0;
         if (mileageMode === 'calc') {
             const d = Number(dailyDistInput.value) || 0;
@@ -71,9 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let baseIdx = affordable.length > 0 ? carData.indexOf(affordable[affordable.length - 1]) : 0;
         
         let jump = pushLevel > 6 ? 6 + Math.floor((pushLevel - 6) / 3) : pushLevel;
-        const bestCar = carData[Math.min(carData.length - 1, baseIdx + jump)];
+        currentBestCar = carData[Math.min(carData.length - 1, baseIdx + jump)];
 
-        updateUI(bestCar, salary, cash, mileage, instMonths, age, exp);
+        updateUI(currentBestCar, salary, cash, mileage, instMonths, age, exp);
     }
 
     function updateUI(car, salary, cash, mileage, instMonths, age, exp) {
@@ -97,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (car.price > 1000000) { badge = '🌌 초월적 존재'; level = 'bankrupt'; }
         monitorBg.className = `monitor-section ${level}`; safetyBadge.textContent = badge;
+        appState.safetyLevel = badge;
         monitorMsg.innerHTML = pushLevel > 0 ? `무리하기 <strong>${pushLevel}단계</strong> 진입!<br>${PUSH_MESSAGES[Math.min(pushLevel, PUSH_MESSAGES.length-1)]}` : `연봉 <strong>${salary.toLocaleString()}만원</strong> 기준,<br>현명한 소비의 정석입니다.`;
 
         let af = age < 21 ? 2.5 : age < 26 ? 1.8 : age < 30 ? 1.2 : age > 60 ? 1.3 : 1.0;
@@ -119,6 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (car.id === 'public') { costs.maint = 125000; det.maint = "대중교통 월정액"; }
 
         const total = Object.values(costs).reduce((a, b) => a + b, 0);
+        appState.totalMonthly = Math.round(total);
         totalCostEl.textContent = isNaN(total) ? "0" : Math.round(total).toLocaleString();
 
         const updateB = (key, val, d) => {
@@ -196,6 +201,109 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('direct-mileage-group').classList.remove('hidden');
         calculate();
     });
+
+    // --- AI Consulting Logic ---
+    const aiFab = document.getElementById('ai-fab');
+    const aiModal = document.getElementById('ai-modal');
+    const aiInput = document.getElementById('ai-input');
+    const btnSendAi = document.getElementById('btn-send-ai');
+    const aiChatBody = document.getElementById('ai-chat-body');
+    const btnCloseAi = document.getElementById('btn-close-ai');
+
+    let isAiThinking = false;
+    let consultationCount = 0; // 상담 횟수 카운트
+
+    aiFab.addEventListener('click', () => aiModal.classList.toggle('hidden'));
+    btnCloseAi.addEventListener('click', () => aiModal.classList.add('hidden'));
+
+    async function sendToAi() {
+        const query = aiInput.value.trim();
+        if (!query || isAiThinking) return;
+
+        // 1회 제한 체크
+        if (consultationCount >= 1) {
+            alert("정밀 상담은 1회만 가능합니다. 다시 분석하시려면 페이지를 새로고침 해주세요!");
+            return;
+        }
+
+        addMessage('user', query);
+        aiInput.value = "";
+        isAiThinking = true;
+
+        console.log("AI 상담 요청 시작...", { query });
+
+        const typingDiv = addTypingIndicator();
+
+        try {
+            const contextPrompt = `
+                너는 자동차 구매 및 금융 전문 컨설턴트야. 사용자의 현재 재정 상태를 바탕으로 아주 현실적이고 때로는 따끔하게(팩폭) 조언을 해줘야 해.
+                상담은 1회성으로 끝날 것이므로, 단 한 번의 답변에 모든 핵심적인 조언을 담아줘.
+                [사용자 정보]
+                - 나이: ${ageInput.value}세, 운전경력: ${expInput.options[expInput.selectedIndex].text}
+                - 연봉: ${appState.salary}만원, 현재 보유 현금: ${appState.cash}만원
+                - 현재 보고 있는 차: ${currentBestCar.name} (차량가: ${currentBestCar.price}만원)
+                - 할부 설정: ${instMonthsInput.options[instMonthsInput.selectedIndex].text}
+                - 예상 월 유지비: ${appState.totalMonthly.toLocaleString()}원
+                - 현재 안전 등급: ${appState.safetyLevel}
+
+                사용자의 질문에 대해 위 데이터를 바탕으로 통계적, 금융적으로 분석해서 한국어로 답변해줘.
+            `;
+
+            const API_URL = "/api/chat";
+
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt: contextPrompt, query: query })
+            });
+
+            const data = await response.json();
+            typingDiv.remove();
+
+            if (data.error) {
+                console.error("AI 에러 응답:", data.error);
+                addMessage('bot', `상담 중 오류가 발생했어요: ${data.error}`);
+            } else {
+                console.log("AI 응답 성공!");
+                addMessage('bot', data.answer);
+                consultationCount++; // 카운트 증가
+                
+                // 입력창 및 버튼 비활성화
+                aiInput.disabled = true;
+                aiInput.placeholder = "상담이 완료되었습니다.";
+                btnSendAi.disabled = true;
+                btnSendAi.style.opacity = "0.5";
+                
+                addMessage('bot', "💡 정밀 진단이 완료되었습니다. 분석 결과를 바탕으로 현명한 선택 하시길 바랍니다!");
+            }
+        } catch (err) {
+            console.error("네트워크 에러:", err);
+            typingDiv.remove();
+            addMessage('bot', "서버와의 연결이 원활하지 않습니다. 잠시 후 다시 시도해 주세요.");
+        } finally {
+            isAiThinking = false;
+        }
+    }
+
+    function addMessage(sender, text) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `ai-msg ${sender}`;
+        msgDiv.textContent = text;
+        aiChatBody.appendChild(msgDiv);
+        aiChatBody.scrollTop = aiChatBody.scrollHeight;
+    }
+
+    function addTypingIndicator() {
+        const div = document.createElement('div');
+        div.className = 'ai-msg bot typing-container';
+        div.innerHTML = `<div class="typing"><span></span><span></span><span></span></div>`;
+        aiChatBody.appendChild(div);
+        aiChatBody.scrollTop = aiChatBody.scrollHeight;
+        return div;
+    }
+
+    btnSendAi.addEventListener('click', sendToAi);
+    aiInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendToAi(); });
 
     calculate();
 });
