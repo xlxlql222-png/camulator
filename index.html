@@ -206,11 +206,15 @@
         </div>
         <div id="ai-chat-body" class="ai-modal-body">
             <div class="ai-msg bot">
-                안녕하세요! 현재 입력하신 재정 상태와 차량 정보를 바탕으로 전문적인 상담을 도와드릴게요. 궁금한 점을 물어보세요!
+                안녕하세요! 현재 입력하신 재정 상태와 차량 정보를 바탕으로 전문적인 상담을 도와드릴게요.<br><br>
+                <strong>⚠️ 이 상담은 1회용이며, 답변 후 개인 AI(ChatGPT 등)에게 마저 물어볼 수 있도록 요약본이 제공됩니다.</strong>
             </div>
         </div>
+        <div class="ai-modal-footer-top">
+            <button id="btn-fetch-data">📋 내 정보 요약해서 가져오기</button>
+        </div>
         <div class="ai-modal-footer">
-            <input type="text" id="ai-input" placeholder="예: 이 차 사면 카푸어 될까요?">
+            <input type="text" id="ai-input" placeholder="궁금한 점을 입력하세요...">
             <button id="btn-send-ai">전송</button>
         </div>
     </div>

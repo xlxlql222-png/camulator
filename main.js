@@ -209,18 +209,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnSendAi = document.getElementById('btn-send-ai');
     const aiChatBody = document.getElementById('ai-chat-body');
     const btnCloseAi = document.getElementById('btn-close-ai');
+    const btnFetchData = document.getElementById('btn-fetch-data');
 
     let isAiThinking = false;
-    let consultationCount = 0; // 상담 횟수 카운트
+    let consultationCount = 0;
 
     aiFab.addEventListener('click', () => aiModal.classList.toggle('hidden'));
     btnCloseAi.addEventListener('click', () => aiModal.classList.add('hidden'));
+
+    // 내 정보 가져오기 버튼 로직
+    btnFetchData.addEventListener('click', () => {
+        const summary = `나이: ${ageInput.value}세 / 연봉: ${appState.salary}만원 / 보유자산: ${appState.cash}만원 / 관심차종: ${currentBestCar.name} (${currentBestCar.price}만원) / 할부: ${instMonthsInput.options[instMonthsInput.selectedIndex].text} / 예상 월유지비: ${appState.totalMonthly.toLocaleString()}원 / 안전등급: ${appState.safetyLevel}\n\n이 조건일 때 이 차를 사도 괜찮을지 전문적으로 분석해줘.`;
+        aiInput.value = summary;
+        aiInput.focus();
+    });
 
     async function sendToAi() {
         const query = aiInput.value.trim();
         if (!query || isAiThinking) return;
 
-        // 1회 제한 체크
         if (consultationCount >= 1) {
             alert("정밀 상담은 1회만 가능합니다. 다시 분석하시려면 페이지를 새로고침 해주세요!");
             return;
@@ -233,7 +240,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const typingDiv = addTypingIndicator();
 
         try {
-            // 서버로 보낼 사용자 데이터 묶음
             const userData = {
                 age: ageInput.value,
                 experience: expInput.options[expInput.selectedIndex].text,
@@ -265,8 +271,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 aiInput.placeholder = "상담이 완료되었습니다.";
                 btnSendAi.disabled = true;
                 btnSendAi.style.opacity = "0.5";
+                btnFetchData.disabled = true;
+                btnFetchData.style.opacity = "0.5";
                 
-                addMessage('bot', "💡 정밀 진단이 완료되었습니다. 분석 결과를 바탕으로 현명한 선택 하시길 바랍니다!");
+                addMessage('bot', "✨ 상담 마지막에 적힌 요약을 복사하여 사용하시는 AI에게 직접 마저 상담을 받아보세요!");
             }
         } catch (err) {
             typingDiv.remove();
