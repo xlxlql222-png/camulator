@@ -241,8 +241,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let consultationCount = 0;
 
     aiFab.addEventListener('click', () => {
-        aiModal.classList.toggle('hidden');
-        if (!aiModal.classList.contains('hidden')) { aiChatBody.scrollTop = aiChatBody.scrollHeight; }
+        aiModal.classList.remove('hidden');
+        aiModal.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (!aiModal.classList.contains('hidden')) { 
+            aiChatBody.scrollTop = aiChatBody.scrollHeight; 
+            aiInput.focus();
+        }
     });
     btnCloseAi.addEventListener('click', () => aiModal.classList.add('hidden'));
 
