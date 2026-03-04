@@ -40,7 +40,7 @@
 
             <!-- Inputs -->
             <section class="card input-section">
-                <h3>👤 기본 프로필 (보험료 산출용)</h3>
+                <h3>👤 기본 프로필</h3>
                 <div class="input-row">
                     <div class="input-group">
                         <label for="age">만 나이</label>
@@ -65,21 +65,21 @@
                         <input type="number" id="salary" placeholder="예: 3500" inputmode="numeric">
                     </div>
                     <div class="input-group" id="cash-group">
-                        <label for="cash">모은 돈 (만원)</label>
-                        <input type="number" id="cash" placeholder="예: 500" inputmode="numeric">
+                        <label for="cash">일시불 가능 금액 (만원)</label>
+                        <input type="number" id="cash" placeholder="예: 2000" inputmode="numeric">
                     </div>
                 </div>
                 
                 <div class="input-group" style="margin-bottom: 15px;">
                     <label for="monthly-budget" style="color: var(--primary); font-weight: 900;">💳 월 충당 가능 금액 (만원)</label>
                     <input type="number" id="monthly-budget" placeholder="예: 80" value="50" inputmode="numeric" style="border: 2px solid var(--primary-light);">
-                    <p class="input-tip">매달 차 유지비로 최대 얼마까지 쓸 수 있나요?</p>
+                    <p class="input-tip">매달 순수하게 차에만 쓸 수 있는 여유 자금</p>
                 </div>
 
                 <div class="input-group">
                     <label for="installment-months">할부 기간 (개월)</label>
                     <select id="installment-months">
-                        <option value="0">일시불 (0개월)</option>
+                        <option value="0">전액 일시불 (0개월)</option>
                         <option value="12">12개월</option>
                         <option value="24">24개월</option>
                         <option value="36">36개월</option>
@@ -130,7 +130,11 @@
 
             <!-- Result -->
             <section class="card result-section">
-                <h3>📉 월 예상 지출 (유지비)</h3>
+                <div class="upfront-cost-badge">
+                    💸 구매 시 즉시 지출액: <span id="total-upfront-cost">0</span>만원
+                </div>
+                
+                <h3>📉 월 예상 유지비 리포트</h3>
                 
                 <div class="total-cost-display">
                     <span id="total-monthly-cost">0</span>
@@ -140,11 +144,11 @@
                 <!-- Budget Balance Display -->
                 <div id="budget-balance-area" class="budget-balance-area">
                     <div class="balance-row">
-                        <span>내 충당 가능 금액:</span>
+                        <span>내 월 충당 예산:</span>
                         <span id="display-monthly-budget">0원</span>
                     </div>
                     <div class="balance-row status">
-                        <span>재정 여유:</span>
+                        <span>월간 재정 여유:</span>
                         <span id="budget-diff" class="balance-val">0원</span>
                     </div>
                 </div>

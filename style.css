@@ -76,7 +76,20 @@ input:disabled { opacity: 0.5; cursor: not-allowed; }
 .push-tip { font-size: 0.75rem; color: var(--text-sub); margin-top: 8px; }
 
 /* Result */
-.total-cost-display { text-align: center; padding: 20px 0; border-bottom: 2px dashed #f1f3f5; margin-bottom: 20px; }
+/* Result Section Improvements */
+.upfront-cost-badge {
+    display: inline-block;
+    background: #fff4e6;
+    color: #d9480f;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    border: 1px solid #ffd8a8;
+}
+
+.total-cost-display { text-align: center; padding: 10px 0 20px; border-bottom: 2px dashed #f1f3f5; margin-bottom: 20px; }
 #total-monthly-cost { font-size: 2.8rem; font-weight: 900; }
 .chart-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; position: relative; width: 100%; }
 .chart-label { width: 70px; flex-shrink: 0; font-size: 0.85rem; color: var(--text-sub); font-weight: 600; text-align: left; }

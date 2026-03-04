@@ -1,24 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("App Loaded v7.0 - Budget-Based Recommendation System");
+    console.log("App Loaded v7.1 - Hyper Realistic Recommendation");
 
     const carData = [
-        { id: 'walk', name: '튼튼한 두 다리', price: 0, cc: 0, taxYear: 0, insurance: 0, efficiency: 0, maintenance: 0, icon: '🚶', img: '' },
-        { id: 'public', name: '대중교통 / 자전거', price: 0, cc: 0, taxYear: 0, insurance: 0, efficiency: 0, maintenance: 12, icon: '🚌', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Bus_icon.svg/640px-Bus_icon.svg.png' },
-        { id: 'casper', name: '캐스퍼/모닝 (경차)', price: 1800, cc: 998, taxYear: 10, insurance: 70, efficiency: 14, maintenance: 5, icon: '🐣', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Hyundai_Casper_AX1_White_1.jpg/640px-Hyundai_Casper_AX1_White_1.jpg' },
-        { id: 'avante', name: '아반떼 (준중형)', price: 2600, cc: 1598, taxYear: 29, insurance: 90, efficiency: 15, maintenance: 7, icon: '🚙', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Hyundai_Avante_CN7_white_%281%29.jpg/640px-Hyundai_Avante_CN7_white_%281%29.jpg' },
-        { id: 'k5', name: 'K5 / 쏘나타 (중형)', price: 3400, cc: 1999, taxYear: 52, insurance: 110, efficiency: 12, maintenance: 10, icon: '🚘', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Kia_K5_Hybrid_DL3_White_%281%29_%28cropped%29.jpg/640px-Kia_K5_Hybrid_DL3_White_%281%29_%28cropped%29.jpg' },
-        { id: 'sorento', name: '쏘렌토 (중형 SUV)', price: 4400, cc: 2151, taxYear: 56, insurance: 120, efficiency: 11, maintenance: 12, icon: '🏔️', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Kia_Sorento_MQ4_White_1.jpg/640px-Kia_Sorento_MQ4_White_1.jpg' },
-        { id: 'grandeur', name: '그랜저 (준대형)', price: 4700, cc: 2497, taxYear: 65, insurance: 130, efficiency: 10, maintenance: 13, icon: '💎', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Hyundai_Grandeur_GN7_Black_1.jpg/640px-Hyundai_Grandeur_GN7_Black_1.jpg' },
-        { id: 'palisade', name: '팰리세이드 (대형 SUV)', price: 5700, cc: 3778, taxYear: 98, insurance: 150, efficiency: 8, maintenance: 15, icon: '🏰', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Hyundai_Palisade_LX2_White_1.jpg/640px-Hyundai_Palisade_LX2_White_1.jpg' },
-        { id: 'g80', name: '제네시스 G80', price: 6700, cc: 2497, taxYear: 65, insurance: 170, efficiency: 9, maintenance: 20, icon: '✨', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Genesis_G80_RG3_white_%282%29.jpg/640px-Genesis_G80_RG3_white_%282%29.jpg' },
-        { id: 'gv80', name: '제네시스 GV80', price: 8700, cc: 2497, taxYear: 65, insurance: 200, efficiency: 8, maintenance: 25, icon: '🏔️✨', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Genesis_GV80_JX1_White_1.jpg/640px-Genesis_GV80_JX1_White_1.jpg' },
-        { id: 'model3', name: '테슬라 모델 3', price: 6200, cc: 0, taxYear: 13, insurance: 180, efficiency: 18, maintenance: 5, icon: '🔋', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Tesla_Model_3_white_%282%29.jpg/640px-Tesla_Model_3_white_%282%29.jpg' },
-        { id: 'eclass', name: '벤츠 E-Class', price: 8700, cc: 1999, taxYear: 52, insurance: 250, efficiency: 10, maintenance: 50, icon: '🌟', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Mercedes-Benz_E_220_d_Avantgarde_%28W_213%29_%E2%80%93_Frontansicht%2C_15._Mai_2016%2C_D%C3%BCsseldorf.jpg/640px-Mercedes-Benz_E_220_d_Avantgarde_%28W_213%29_%E2%80%93_Frontansicht%2C_15._Mai_2016%2C_D%C3%BCsseldorf.jpg' },
-        { id: 'cayenne', name: '포르쉐 카이엔', price: 15200, cc: 2995, taxYear: 78, insurance: 350, efficiency: 7, maintenance: 80, icon: '🚀', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Porsche_Cayenne_S_%2892A%29_facelift_%E2%80%93_Frontansicht%2C_11._Oktober_2015%2C_D%C3%BCsseldorf.jpg/640px-Porsche_Cayenne_S_%2892A%29_facelift_%E2%80%93_Frontansicht%2C_11._Oktober_2015%2C_D%C3%BCsseldorf.jpg' },
-        { id: 'ferrari', name: '페라리 F8', price: 40200, cc: 3902, taxYear: 101, insurance: 1000, efficiency: 5, maintenance: 300, icon: '🏎️', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Ferrari_F8_Tributo_Geneva_International_Motor_Show_2019_Le_Grand-Saconnex_%28GIMS0029%29.jpg/640px-Ferrari_F8_Tributo_Geneva_International_Motor_Show_2019_Le_Grand-Saconnex_%28GIMS0029%29.jpg' }
+        { id: 'walk', name: '튼튼한 두 다리', price: 0, cc: 0, taxYear: 0, insurance: 0, efficiency: 0, maintenance: 0, icon: '🚶', img: '', isImport: false },
+        { id: 'public', name: '대중교통 / 자전거', price: 0, cc: 0, taxYear: 0, insurance: 0, efficiency: 0, maintenance: 12, icon: '🚌', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Bus_icon.svg/640px-Bus_icon.svg.png', isImport: false },
+        { id: 'casper', name: '캐스퍼/모닝 (경차)', price: 1800, cc: 998, taxYear: 10, insurance: 70, efficiency: 14, maintenance: 10, icon: '🐣', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Hyundai_Casper_AX1_White_1.jpg/640px-Hyundai_Casper_AX1_White_1.jpg', isImport: false },
+        { id: 'avante', name: '아반떼 (준중형)', price: 2600, cc: 1598, taxYear: 29, insurance: 90, efficiency: 15, maintenance: 15, icon: '🚙', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Hyundai_Avante_CN7_white_%281%29.jpg/640px-Hyundai_Avante_CN7_white_%281%29.jpg', isImport: false },
+        { id: 'k5', name: 'K5 / 쏘나타 (중형)', price: 3400, cc: 1999, taxYear: 52, insurance: 110, efficiency: 12, maintenance: 20, icon: '🚘', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Kia_K5_Hybrid_DL3_White_%281%29_%28cropped%29.jpg/640px-Kia_K5_Hybrid_DL3_White_%281%29_%28cropped%29.jpg', isImport: false },
+        { id: 'sorento', name: '쏘렌토 (중형 SUV)', price: 4400, cc: 2151, taxYear: 56, insurance: 120, efficiency: 11, maintenance: 25, icon: '🏔️', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Kia_Sorento_MQ4_White_1.jpg/640px-Kia_Sorento_MQ4_White_1.jpg', isImport: false },
+        { id: 'grandeur', name: '그랜저 (준대형)', price: 4700, cc: 2497, taxYear: 65, insurance: 130, efficiency: 10, maintenance: 30, icon: '💎', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Hyundai_Grandeur_GN7_Black_1.jpg/640px-Hyundai_Grandeur_GN7_Black_1.jpg', isImport: false },
+        { id: 'palisade', name: '팰리세이드 (대형 SUV)', price: 5700, cc: 3778, taxYear: 98, insurance: 150, efficiency: 8, maintenance: 35, icon: '🏰', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Hyundai_Palisade_LX2_White_1.jpg/640px-Hyundai_Palisade_LX2_White_1.jpg', isImport: false },
+        { id: 'g80', name: '제네시스 G80', price: 6700, cc: 2497, taxYear: 65, insurance: 170, efficiency: 9, maintenance: 50, icon: '✨', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Genesis_G80_RG3_white_%282%29.jpg/640px-Genesis_G80_RG3_white_%282%29.jpg', isImport: false },
+        { id: 'gv80', name: '제네시스 GV80', price: 8700, cc: 2497, taxYear: 65, insurance: 200, efficiency: 8, maintenance: 60, icon: '🏔️✨', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Genesis_GV80_JX1_White_1.jpg/640px-Genesis_GV80_JX1_White_1.jpg', isImport: false },
+        { id: 'model3', name: '테슬라 모델 3', price: 6200, cc: 0, taxYear: 13, insurance: 180, efficiency: 18, maintenance: 30, icon: '🔋', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Tesla_Model_3_white_%282%29.jpg/640px-Tesla_Model_3_white_%282%29.jpg', isImport: true },
+        { id: 'eclass', name: '벤츠 E-Class', price: 8700, cc: 1999, taxYear: 52, insurance: 250, efficiency: 10, maintenance: 120, icon: '🌟', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Mercedes-Benz_E_220_d_Avantgarde_%28W_213%29_%E2%80%93_Frontansicht%2C_15._Mai_2016%2C_D%C3%BCsseldorf.jpg/640px-Mercedes-Benz_E_220_d_Avantgarde_%28W_213%29_%E2%80%93_Frontansicht%2C_15._Mai_2016%2C_D%C3%BCsseldorf.jpg', isImport: true },
+        { id: 'cayenne', name: '포르쉐 카이엔', price: 15200, cc: 2995, taxYear: 78, insurance: 350, efficiency: 7, maintenance: 250, icon: '🚀', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Porsche_Cayenne_S_%2892A%29_facelift_%E2%80%93_Frontansicht%2C_11._Oktober_2015%2C_D%C3%BCsseldorf.jpg/640px-Porsche_Cayenne_S_%2892A%29_facelift_%E2%80%93_Frontansicht%2C_11._Oktober_2015%2C_D%C3%BCsseldorf.jpg', isImport: true },
+        { id: 'ferrari', name: '페라리 F8', price: 40200, cc: 3902, taxYear: 101, insurance: 1000, efficiency: 5, maintenance: 800, icon: '🏎️', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Ferrari_F8_Tributo_Geneva_International_Motor_Show_2019_Le_Grand-Saconnex_%28GIMS0029%29.jpg/640px-Ferrari_F8_Tributo_Geneva_International_Motor_Show_2019_Le_Grand-Saconnex_%28GIMS0029%29.jpg', isImport: true }
     ];
 
-    const CONSTANTS = { FUEL_PRICE: 1650, INTEREST_RATE: 0.055, MAINT_BASE_RATE: 35 };
+    const CONSTANTS = { FUEL_PRICE: 1650, IMPORT_FUEL_SURCHARGE: 200, INTEREST_RATE: 0.055 };
     let pushLevel = 0; let mileageMode = 'calc'; let currentBestCar = carData[0];
     let appState = { salary: 0, cash: 0, monthlyBudget: 500000, totalMonthly: 0, safetyLevel: '평가 대기중' };
 
@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalCostEl = document.getElementById('total-monthly-cost'); 
     const displayBudgetEl = document.getElementById('display-monthly-budget');
     const budgetDiffEl = document.getElementById('budget-diff');
+    const upfrontCostEl = document.getElementById('total-upfront-cost');
     
     const revealArea = document.getElementById('reveal-area'); 
     const btnRevealPush = document.getElementById('btn-reveal-push');
@@ -75,18 +76,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         calcMileageEl.textContent = mileage.toLocaleString();
 
-        // New Recommendation Logic: Find best car that fits within the monthly budget
+        // Enhanced Recommendation Logic
         let bestIdx = 0;
         for (let i = 0; i < carData.length; i++) {
             const car = carData[i];
             const costs = getEstimatedCosts(car, cash, instMonths, age, exp, mileage);
             const total = Object.values(costs).reduce((a, b) => a + b, 0);
             
-            // if total monthly cost <= monthly budget, it's affordable
-            if (total <= monthlyBudget || car.price === 0) {
+            // 1. Can buy? (Cash >= Price OR can afford installment)
+            const canAffordPurchase = (cash >= car.price) || (instMonths > 0 && costs.inst <= (monthlyBudget * 0.7));
+            
+            // 2. Can maintain? (Basic costs <= budget)
+            // Even with 0 installment, basic costs (insurance, tax, fuel, maint) must fit budget.
+            const basicMaintenance = costs.ins + costs.tax + costs.fuel + costs.maint;
+            const canMaintain = basicMaintenance <= monthlyBudget;
+
+            if (canAffordPurchase && canMaintain || car.price === 0) {
                 bestIdx = i;
             } else {
-                break; // Stop when it's no longer affordable
+                break;
             }
         }
         
@@ -111,10 +119,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const r = 0.055/12; const n = instMonths;
             costs.inst = (loan * r * Math.pow(1+r, n)) / (Math.pow(1+r, n)-1) * 10000;
         }
-        costs.ins = (car.insurance/12)*10000*af*ef;
+        
+        // Import car penalty: Higher insurance, higher maintenance, premium fuel
+        const importFactor = car.isImport ? 1.5 : 1.0;
+        costs.ins = (car.insurance/12)*10000*af*ef * importFactor;
         costs.tax = (car.taxYear/12)*10000;
-        costs.fuel = car.efficiency > 0 ? (mileage/car.efficiency)*1650 : 0;
-        costs.maint = (car.maintenance*10000/12) + (mileage*35);
+        
+        const fuelPrice = car.isImport ? 1850 : 1650; // Premium fuel for imports
+        costs.fuel = car.efficiency > 0 ? (mileage/car.efficiency)*fuelPrice : 0;
+        
+        // Maintenance: Base + Distance factor (Higher for imports)
+        costs.maint = (car.maintenance*10000/12) + (mileage * (car.isImport ? 60 : 35));
 
         return costs;
     }
@@ -134,6 +149,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const total = Object.values(costs).reduce((a, b) => a + b, 0);
         appState.totalMonthly = Math.round(total);
         totalCostEl.textContent = Math.round(total).toLocaleString();
+
+        // Upfront cost calculation (Cash used for purchase)
+        const upfront = Math.min(car.price, cash);
+        upfrontCostEl.textContent = upfront.toLocaleString();
 
         // Budget Balance UI
         displayBudgetEl.textContent = monthlyBudget.toLocaleString() + "원";
@@ -155,7 +174,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         monitorBg.className = `monitor-section ${level}`; safetyBadge.textContent = badge;
         appState.safetyLevel = badge;
-        monitorMsg.innerHTML = pushLevel > 0 ? `무리하기 <strong>${pushLevel}단계</strong> 진입!<br>${PUSH_MESSAGES[Math.min(pushLevel, PUSH_MESSAGES.length-1)]}` : `월 <strong>${(monthlyBudget/10000).toLocaleString()}만원</strong> 예산 내에서<br>최적의 선택입니다.`;
+        
+        let msg = pushLevel > 0 ? `무리하기 <strong>${pushLevel}단계</strong> 진입!<br>${PUSH_MESSAGES[Math.min(pushLevel, PUSH_MESSAGES.length-1)]}` : `월 <strong>${(monthlyBudget/10000).toLocaleString()}만원</strong> 예산 내에서<br>최적의 선택입니다.`;
+        if (car.isImport && total > monthlyBudget) msg += "<br><small>⚠️ 수입차는 일시불로 사도 유지비가 무시무시합니다!</small>";
+        monitorMsg.innerHTML = msg;
 
         const updateB = (key, val) => {
             const p = total > 0 ? (val/total)*100 : 0;
@@ -225,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnCloseAi.addEventListener('click', () => aiModal.classList.add('hidden'));
 
     btnFetchData.addEventListener('click', () => {
-        const summary = `나이: ${ageInput.value}세 / 연봉: ${appState.salary}만원 / 보유자산: ${appState.cash}만원 / 월 충당가능액: ${(appState.monthlyBudget/10000)}만원 / 관심차종: ${currentBestCar.name} (${currentBestCar.price}만원) / 예상 월유지비: ${appState.totalMonthly.toLocaleString()}원 / 안전등급: ${appState.safetyLevel}\n\n이 조건일 때 이 차를 유지하는 게 현실적으로 가능할지 분석해줘.`;
+        const summary = `나이: ${ageInput.value}세 / 연봉: ${appState.salary}만원 / 일시불가능액: ${appState.cash}만원 / 월 충당가능액: ${(appState.monthlyBudget/10000)}만원 / 관심차종: ${currentBestCar.name} (${currentBestCar.price}만원) / 예상 월유지비: ${appState.totalMonthly.toLocaleString()}원 / 안전등급: ${appState.safetyLevel}\n\n이 조건일 때 이 차를 유지하는 게 현실적으로 가능할지 분석해줘.`;
         aiInput.value = summary;
         aiInput.focus();
     });
@@ -244,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const userData = {
                 age: ageInput.value, salary: appState.salary, cash: appState.cash, monthlyBudget: appState.monthlyBudget,
                 currentCar: currentBestCar.name, carPrice: currentBestCar.price, installment: instMonthsInput.options[instMonthsInput.selectedIndex].text,
-                monthlyCost: appState.totalMonthly, safetyLevel: appState.safetyLevel
+                monthlyCost: appState.totalMonthly, safetyLevel: appState.safetyLevel, isImport: currentBestCar.isImport
             };
             const response = await fetch("/api/chat", {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
